@@ -5,10 +5,7 @@ fi
 source ~/.config/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Private configuration
-source ~/.config/zsh_private
-
-# Case Insensitive Autocompletion + Other Options
+# Case Insensitive Autocompletion + history options
 autoload -Uz compinit && compinit -d ~/.config/.zcompdump
 setopt no_case_glob
 setopt share_history
@@ -17,8 +14,8 @@ setopt hist_ignore_all_dups
 # Plugins
 source <(zoxide init zsh)
 source <(fzf --zsh)
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # fzf-zoxide integration
 function fzf_zoxide() { 
@@ -55,15 +52,13 @@ alias restow="(cd ~/Repos/dotfiles && stow -vt ~ home)"
 function md() { mkdir "$1" && cd "$1" }
 
 # Package Management Aliases
-alias up="kitten @ launch flatpak update -y; sudo dnf upgrade -y"
-alias dnfi="sudo dnf install"
-alias dnfr="sudo dnf remove"
-alias dnfs="dnf search"
-alias dnfp="dnf provides"
+alias up="kitten @ launch flatpak update -y; sudo pacman -Syu --noconfirm"
 alias fpi="flatpak install"
 alias fpr="flatpak remove --delete-data"
 alias fps="flatpak search"
 alias fpl="flatpak list"
+alias pi='pacman -Slq | fzf --multi --preview "pacman -Si {1}" | xargs -ro sudo pacman -S'
+alias pr='pacman -Qq | fzf --multi --preview "pacman -Qi {1}" | xargs -ro sudo pacman -Rns'
 
 # git aliases
 alias gs="git status --short"
@@ -77,7 +72,6 @@ alias gd="git diff"
 alias gl="git log --graph --decorate --oneline"
 alias gp="git pull"
 alias gP="git push"
-alias gfP="git push --force-with-lease"
 alias gre="git reset --hard HEAD"
 
 # Bind arrow keys to search history based on the typed command prefix.
