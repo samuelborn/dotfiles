@@ -1,0 +1,62 @@
+{
+  "position": "left",
+  "spacing": 16,
+  "margin-bottom": 16,
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "tray",
+    "pulseaudio",
+    "bluetooth",
+    "idle_inhibitor",
+    "custom/start-menu",
+    "custom/power-menu",
+  ],
+  "clock": {
+    "justify": "center",
+    "format": "{:%H\n%M}",
+    "interval": 1,
+    "tooltip-format": "<big>{:%H:%M:%S}\n\n<tt>{calendar}</tt></big>",
+    "calendar": {
+      "weeks-pos": "left",
+      "format": {
+        "months": "<b>{}</b>",
+        "weekdays": "<b>{}</b>",
+        "today": "<b>{}</b>",
+      },
+    },
+  },
+  "idle_inhibitor": {
+    "justify": "left",
+    "format": "{icon} ",
+    "format-icons": {
+      "activated": "",
+      "deactivated": "",
+    },
+  },
+  "tray": {
+    "spacing": 16,
+  },
+  "pulseaudio": {
+    "format": "  \n{volume}",
+    "format-muted": "",
+    "on-click": "pavucontrol",
+    "justify": "center",
+  },
+  "bluetooth": {
+    "format-on": "󰂲",
+    "format-disabled": "󰂲",
+    "format-no-controller": "󰂲",
+    "format-connected": "󰂯",
+    "on-click": "blueberry",
+    "justify": "center",
+  },
+  "custom/start-menu": {
+    "format": "",
+    "on-click": "fuzzel",
+  },
+  "custom/power-menu": {
+    "format": "",
+    "on-click": "~/.config/fuzzel/fuzzel-power-menu.sh",
+  },
+}
