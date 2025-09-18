@@ -1,5 +1,3 @@
-flatpak config --set extra-languages "de"
-
 # Regenerate list: flatpak list --app --columns=application | sed 's/$/ \\/' | sort
 flatpak install flathub -y \
     org.gtk.Gtk3theme.adw-gtk3 \
@@ -9,7 +7,11 @@ flatpak install flathub -y \
     com.github.jeromerobert.pdfarranger \
     com.calibre_ebook.calibre \
     com.github.tchx84.Flatseal \
-    com.mattjakeman.ExtensionManager \
+    org.chromium.Chromium \
+    org.gnome.Loupe \
+    org.gnome.Showtime \
+    org.gnome.Papers \
+    org.gnome.Calendar \
     com.spotify.Client \
     net.ankiweb.Anki \
     org.gimp.GIMP \

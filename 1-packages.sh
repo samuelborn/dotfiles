@@ -1,18 +1,15 @@
-# Useful packages
-sudo dnf install -y \
+sudo pacman -Syu --noconfirm \
     adobe-source-sans-fonts \
     adw-gtk-theme \
     bat \
     blueberry \
     btop \
-    chromium \
     cliphist \
     cloc \
     ddcutil \
     dunst \
     fastfetch \
     fd \
-    firefox \
     flatpak \
     fuzzel \
     fzf \
@@ -28,19 +25,15 @@ sudo dnf install -y \
     hyprsunset \
     kitty \
     lazygit \
-    loupe \
     man-db \
-    mpv \
     nautilus \
     neovim \
     network-manager-applet \
     nextcloud-client \
     npm \
     nwg-look \
-    papers \
     papirus-icon-theme \
     pavucontrol \
-    pdfarranger \
     ripgrep \
     ripgrep-all \
     slurp \
