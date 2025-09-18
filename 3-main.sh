@@ -13,8 +13,8 @@ gsettings set org.gnome.desktop.privacy remove-old-trash-files true
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 
 # GitHub add ssh key and default sign commits
-read -p "GitHub email address: " email
-read -p "Name: " name
+read -p "E-Mail address: " email
+read -p "Full name: " name
 ssh-keygen -t ed25519 -C "$email"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
