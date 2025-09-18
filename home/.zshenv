@@ -10,14 +10,9 @@ export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh_histfile"
 export HISTSIZE=100000
 export SAVEHIST=100000
 
-export NVD_BACKEND=direct
-export MOZ_DISABLE_RDD_SANDBOX=1
-export LIBVA_DRIVER_NAME=nvidia
-
 export LD_LIBRARY_PATH="\
 /usr/lib64/openmpi/lib:\
 /usr/local/lib64:\
-$HOME/Nextcloud/ws2425/Master/Code/dependencies/KaHIP:\
 $LD_LIBRARY_PATH"
 
 export FZF_DEFAULT_OPTS="\
