@@ -9,6 +9,7 @@ export WORDCHAR={}
 export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh_histfile"
 export HISTSIZE=100000
 export SAVEHIST=100000
+export GIT_CONFIG_GLOBAL="$HOME/.config/git/config"
 
 export LD_LIBRARY_PATH="\
 /usr/lib64/openmpi/lib:\
