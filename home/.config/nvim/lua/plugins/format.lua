@@ -5,6 +5,7 @@ return {
         formatters_by_ft = {
             javascript = { "prettierd" },
             json       = { "prettierd" },
+            jsonc      = { "prettierd" },
             markdown   = { "prettierd" },
             html       = { "prettierd" },
             css        = { "prettierd" },
