@@ -1,8 +1,5 @@
 flatpak config --set extra-languages "de"
 
-flatpak remote-delete fedora
-flatpak remote-delete fedora-testing
-
 # Regenerate list: flatpak list --app --columns=application | sed 's/$/ \\/' | sort
 flatpak install flathub -y \
     org.gtk.Gtk3theme.adw-gtk3 \
