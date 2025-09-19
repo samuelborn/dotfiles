@@ -53,10 +53,8 @@ function md() { mkdir "$1" && cd "$1" }
 
 # Package Management Aliases
 alias up="kitten @ launch flatpak update -y; sudo pacman -Syu --noconfirm"
-alias fpi="flatpak install"
-alias fpr="flatpak remove --delete-data"
-alias fps="flatpak search"
-alias fpl="flatpak list"
+alias fpi="flatpak remote-ls --app --columns=application | fzf -m | xargs -ro flatpak install"
+alias fpr="flatpak list --columns=application | fzf --multi | xargs -ro flatpak remove --delete-data"
 alias pi='pacman -Slq | fzf --multi --preview "pacman -Si {1}" | xargs -ro sudo pacman -S'
 alias pr='pacman -Qq | fzf --multi --preview "pacman -Qi {1}" | xargs -ro sudo pacman -Rns'
 
