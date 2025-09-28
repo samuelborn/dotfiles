@@ -36,7 +36,6 @@ bindkey "^[[3~" delete-char
 # Useful Aliases
 alias n="nvim"
 alias g="lazygit"
-alias o="xdg-open"
 alias cd="z"
 alias rm="rm -I"
 alias fd="fd --hidden --no-ignore"
@@ -50,6 +49,7 @@ alias tree="tree -C -L 4"
 alias venv="source venv/bin/activate || python -m venv venv && source venv/bin/activate"
 alias restow="(cd ~/Repos/dotfiles && stow -vt ~ home)"
 function md() { mkdir "$1" && cd "$1" }
+function o() { xdg-open $1 &> /dev/null &}
 
 # Package Management Aliases
 alias up="kitten @ launch flatpak update -y; sudo pacman -Syu --noconfirm"
