@@ -41,6 +41,9 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>")
 -- Remove annoying keymap
 vim.keymap.set("x", "J", "j")
 
+-- ce is easier to type than cw
+vim.keymap.set("n", "ce", "cw")
+
 -- Toggle inlay hints
 vim.keymap.set("n", "<leader>i", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
 
