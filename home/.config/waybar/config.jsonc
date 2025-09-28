@@ -39,7 +39,7 @@
   },
   "pulseaudio": {
     "format": "  \n{volume}",
-    "format-muted": "",
+    "format-muted": "",
     "on-click": "pavucontrol",
     "justify": "center",
   },
