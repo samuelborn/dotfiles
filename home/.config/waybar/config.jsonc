@@ -9,7 +9,6 @@
     "pulseaudio",
     "bluetooth",
     "idle_inhibitor",
-    "custom/start-menu",
     "custom/power-menu",
   ],
   "clock": {
