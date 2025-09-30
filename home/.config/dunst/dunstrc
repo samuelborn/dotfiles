@@ -6,6 +6,7 @@ font = Adwaita Sans 12
 origin = top-left
 timeout = 2
 corner_radius = 6   
+history_length = 0
 
 [urgency_low]
 background = "#1e1e2e"
