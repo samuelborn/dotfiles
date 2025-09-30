@@ -6,7 +6,16 @@ cd ~/Repos/dotfiles/home
 stow --target=$HOME .
 
 # Disable all ACPI wakeup triggers to fix suspend
-sudo ln -s /home/born/Repos/dotfiles/fix-wakeup.service /etc/systemd/system/
+cat << 'EOF' | sudo tee /etc/systemd/system/fix-wakeup.service
+[Unit]
+Description="Disable all acpi events to fix suspend + wake"
+
+[Service]
+ExecStart=/bin/sh -c "awk '/enabled/{print $1}' /proc/acpi/wakeup | while read dev; do echo $dev > /proc/acpi/wakeup; done"
+
+[Install]
+WantedBy=multi-user.target
+EOF
 sudo systemctl enable --now fix-wakeup
 
 # Change default shell to zsh
