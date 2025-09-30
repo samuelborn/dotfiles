@@ -5,12 +5,12 @@ echo "$USER ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$USER
 cd ~/Repos/dotfiles/home
 stow --target=$HOME .
 
+# Disable all ACPI wakeup triggers to fix suspend
+sudo ln -s /home/born/Repos/dotfiles/fix-wakeup.service /etc/systemd/system/
+sudo systemctl enable --now fix-wakeup
+
 # Change default shell to zsh
 chsh --shell /bin/zsh
-
-# Automatically delete trash and temporary files
-gsettings set org.gnome.desktop.privacy remove-old-trash-files true
-gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 
 # GitHub add ssh key and default sign commits
 read -p "E-Mail address: " email
