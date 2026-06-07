@@ -1,8 +1,0 @@
-[Unit]
-Description="Disable all acpi events to fix suspend"
-
-[Service]
-ExecStart=/bin/sh -c "for device in \$(awk '/enabled/ {print $1}' /proc/acpi/wakeup); do echo \\$device > /proc/acpi/wakeup; done"
-
-[Install]
-WantedBy=multi-user.target

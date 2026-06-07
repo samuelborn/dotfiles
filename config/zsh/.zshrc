@@ -36,6 +36,7 @@ bindkey "^[[3~" delete-char
 # Useful Aliases
 alias n="nvim"
 alias g="lazygit"
+alias rm="trash"
 alias cd="z"
 alias rm="rm -I"
 alias fd="fd --hidden --no-ignore"
