@@ -52,9 +52,9 @@ function md() { mkdir "$1" && cd "$1" }
 function o() { xdg-open $1 &> /dev/null &}
 
 # Package Management Aliases
-alias up="kitten @ launch flatpak update -y; sudo pacman -Syu --noconfirm"
+alias up="sudo pacman -Syu --noconfirm && flatpak update -y"
 alias fpi="flatpak remote-ls --app --columns=application | fzf -m | xargs -ro flatpak install"
-alias fpr="flatpak list --columns=application | fzf --multi | xargs -ro flatpak remove --delete-data"
+alias fpr="flatpak list --app --columns=application | fzf --multi | xargs -ro flatpak remove --delete-data"
 alias pi='pacman -Slq | fzf --multi --preview "pacman -Si {1}" | xargs -ro sudo pacman -S'
 alias pr='pacman -Qq | fzf --multi --preview "pacman -Qi {1}" | xargs -ro sudo pacman -Rns'
 
@@ -79,3 +79,12 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search
 bindkey "^[[B" down-line-or-beginning-search
+
+# function auto_ls() {
+#     ls -lhF --time-style=long-iso --color=auto
+# }
+# chpwd_functions+=(auto_ls)
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/born/.local/bin:$PATH"

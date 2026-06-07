@@ -12,16 +12,14 @@
     "custom/power-menu",
   ],
   "clock": {
+    "locale": "en_GB.UTF-8",
     "justify": "center",
     "format": "{:%H\n%M}",
     "interval": 1,
-    "tooltip-format": "<big>{:%H:%M:%S}\n\n<tt>{calendar}</tt></big>",
+    "tooltip-format": "<span font='JetBrainsMono Nerd Font'>{:%H:%M:%S}\n\n{calendar}</span>",
     "calendar": {
-      "weeks-pos": "left",
       "format": {
-        "months": "<b>{}</b>",
-        "weekdays": "<b>{}</b>",
-        "today": "<b>{}</b>",
+        "today": "<i><b>{}</b></i>",
       },
     },
   },
