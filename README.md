@@ -14,12 +14,12 @@ config/         # User dotfiles
 
 ## Usage
 
-Rebuild system
 ```sh
+# Rebuild system
 sudo nh os switch
 ```
 
-Symlink dotfiles
-```
+```sh
+# Symlink dotfiles
 ./config/stow.sh
 ```
