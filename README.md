@@ -18,7 +18,7 @@ config/         # User dotfiles
 
 ```sh
 # Rebuild system
-sudo nh os switch
+nh os switch
 ```
 
 ```sh
