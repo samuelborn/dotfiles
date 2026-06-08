@@ -9,7 +9,9 @@ nixos/          # NixOS system configuration
   hosts/        # Per-machine configs
   modules/      # Shared modules between hosts
 config/         # User dotfiles
-  nvim/ zsh/ ...
+  nvim/
+  zsh/
+  ...
 ```
 
 ## Usage
