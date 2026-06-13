@@ -142,7 +142,6 @@ vim.keymap.set("n", "-", "<cmd>Oil<cr>")
 
 require("mini.surround").setup()
 
-
 local cmp = require('blink.cmp')
 cmp.build():pwait()
 cmp.setup()
