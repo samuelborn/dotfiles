@@ -16,7 +16,7 @@
   hardware.amdgpu.initrd.enable = true;
 
   # --- AMD CPU ---
-  hardware.cpu.amd.updateMicrocode = true; 
+  hardware.cpu.amd.updateMicrocode = true;
 
   networking.hostName = "desktop";
 

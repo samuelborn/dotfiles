@@ -9,10 +9,17 @@
 
   # --- Store ---
   nix.settings.auto-optimise-store = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # --- Packages ---
+  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     comma
   ];
+
+  # --- Nix-ld ---
+  programs.nix-ld.enable = true;
 }

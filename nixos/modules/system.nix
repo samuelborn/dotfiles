@@ -8,7 +8,10 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.verbose = false;
   boot.consoleLogLevel = 3;
-  boot.kernelParams = [ "quiet" "udev.log_level=3" ];
+  boot.kernelParams = [
+    "quiet"
+    "udev.log_level=3"
+  ];
 
   # --- Networking ---
   networking.networkmanager.enable = true;
@@ -25,7 +28,10 @@
   # --- Users ---
   users.users.born = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
     shell = pkgs.zsh;
   };
 
@@ -44,6 +50,4 @@
   environment.systemPackages = with pkgs; [ zsh-powerlevel10k ];
   programs.fzf.keybindings = true;
   programs.zoxide.enable = true;
-
-  nixpkgs.config.allowUnfree = true;
 }

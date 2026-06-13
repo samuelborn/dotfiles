@@ -27,6 +27,7 @@
     signal-desktop
     firefox
     mpv
+    wl-clipboard
   ];
 
   # --- Fonts ---

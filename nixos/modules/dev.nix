@@ -28,5 +28,14 @@
     tldr
     trash-cli
     cloc
-  ]; 
+    cargo
+    rustc
+    clang
+    stow
+
+    lua-language-server
+    ruff
+    rust-analyzer
+    llvmPackages.clang-tools
+  ];
 }
