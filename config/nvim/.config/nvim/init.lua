@@ -70,16 +70,11 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end,
 })
 
-vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function() vim.highlight.on_yank() end,
-})
+vim.api.nvim_create_autocmd("TextYankPost", { callback = function() vim.highlight.on_yank() end })
 
 vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, { command = "wa" })
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "help", "man" },
-    command = "wincmd L",
-})
+vim.api.nvim_create_autocmd("FileType", { pattern = { "help", "man" }, command = "wincmd L" })
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "*",
@@ -108,13 +103,7 @@ vim.pack.add({
 })
 
 require("catppuccin").setup {
-    color_overrides = {
-        mocha = {
-            base = "#1D1D20",
-            crust = "#1D1D20",
-            mantle = "#131317",
-        },
-    },
+    color_overrides = { mocha = { base = "#1D1D20", crust = "#1D1D20", mantle = "#131317" } },
 }
 vim.cmd.colorscheme("catppuccin-mocha")
 
@@ -142,9 +131,8 @@ vim.keymap.set("n", "-", "<cmd>Oil<cr>")
 
 require("mini.surround").setup()
 
-local cmp = require('blink.cmp')
-cmp.build():pwait()
-cmp.setup()
+require('blink.cmp').build():pwait()
+require('blink.cmp').setup()
 
 require("lualine").setup {
     options = { component_separators = "" },
@@ -154,7 +142,7 @@ require("lualine").setup {
         lualine_c = {},
         lualine_x = { "filetype", "lsp_status" },
         lualine_y = { "diff" },
-        lualine_z = { "%L" },
+        lualine_z = { "%L ln" },
     },
 }
 
