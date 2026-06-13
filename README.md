@@ -1,6 +1,6 @@
 # Dotfiles
 
-Personal NixOS flake + user configs managed with GNU Stow.
+Personal NixOS and application configs.
 
 ## Structure
 
