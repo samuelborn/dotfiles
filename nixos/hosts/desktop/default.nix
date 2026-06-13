@@ -15,6 +15,9 @@
   };
   hardware.amdgpu.initrd.enable = true;
 
+  # --- DDC/CI (external monitor brightness over DisplayPort) ---
+  hardware.i2c.enable = true;
+
   # --- AMD CPU ---
   hardware.cpu.amd.updateMicrocode = true;
 

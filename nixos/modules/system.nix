@@ -42,6 +42,7 @@
     extraGroups = [
       "wheel"
       "networkmanager"
+      "i2c"
     ];
     shell = pkgs.zsh;
   };
