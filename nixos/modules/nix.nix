@@ -4,7 +4,7 @@
   programs.nh = {
     enable = true;
     clean.enable = true;
-    flake = "~/dotfiles/nixos";
+    flake = "/home/born/dotfiles/nixos";
   };
 
   # --- Store ---
