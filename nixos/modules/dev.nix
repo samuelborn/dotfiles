@@ -33,6 +33,7 @@
     clang
     stow
     tree
+    fastfetch
 
     lua-language-server
     ruff
