@@ -32,6 +32,7 @@
     rustc
     clang
     stow
+    tree
 
     lua-language-server
     ruff
