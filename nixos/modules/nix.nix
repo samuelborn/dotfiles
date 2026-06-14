@@ -20,4 +20,3 @@
   # --- Nix-ld ---
   programs.nix-ld.enable = true;
 }
-
