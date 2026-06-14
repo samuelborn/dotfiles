@@ -49,9 +49,6 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  # --- SSH ---
-  programs.ssh.startAgent = true;
-
   # --- Zsh ---
   programs.zsh = {
     enable = true;
