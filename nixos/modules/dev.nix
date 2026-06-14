@@ -33,6 +33,8 @@
     clang
     stow
     tree
+    python3
+    uv
     fastfetch
 
     lua-language-server
