@@ -19,6 +19,9 @@
   # --- Plasma ---
   services.desktopManager.plasma6.enable = true;
 
+  # --- Keyboard ---
+  services.xserver.xkb.layout = "eu";
+
   # --- Packages ---
   environment.systemPackages = with pkgs; [
     ghostty
