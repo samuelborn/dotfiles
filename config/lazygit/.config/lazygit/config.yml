@@ -1,13 +1,13 @@
 promptToReturnFromSubprocess: false
 quitOnTopLevelReturn: true
-
 gui:
   showCommandLog: false
   nerdFontsVersion: "3"
   showNumstatInFilesView: true
   expandFocusedSidePanel: true
   expandedSidePanelWeight: 4
-
 git:
   autoForwardBranches: allBranches
-
+  diffRenderers:
+    - colorArg: always
+      command: delta --paging=never
