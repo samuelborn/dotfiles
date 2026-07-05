@@ -23,7 +23,11 @@
 
   # --- Locale ---
   time.timeZone = "Europe/Berlin";
-  i18n.defaultLocale = "en_DK.UTF-8";
+i18n.defaultLocale = "en_IE.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_MESSAGES = "en_US.UTF-8";
+  };
 
   # --- Users ---
   users.users.born = {
