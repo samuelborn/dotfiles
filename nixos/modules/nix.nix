@@ -1,5 +1,8 @@
 { pkgs, ... }: {
 
+  # --- Packages ---
+  nixpkgs.config.allowUnfree = true;
+
   # --- nh (os switch) ---
   programs.nh = {
     enable = true;
@@ -13,9 +16,6 @@
     "nix-command"
     "flakes"
   ];
-
-  # --- Packages ---
-  nixpkgs.config.allowUnfree = true;
 
   # --- Nix-ld ---
   programs.nix-ld.enable = true;

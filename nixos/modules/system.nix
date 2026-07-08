@@ -23,8 +23,7 @@
 
   # --- Locale ---
   time.timeZone = "Europe/Berlin";
-i18n.defaultLocale = "en_IE.UTF-8";
-
+  i18n.defaultLocale = "en_IE.UTF-8";
   i18n.extraLocaleSettings = {
     LC_MESSAGES = "en_US.UTF-8";
   };
@@ -46,6 +45,7 @@ i18n.defaultLocale = "en_IE.UTF-8";
   programs.zsh = {
     enable = true;
     promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+    interactiveShellInit = "ns() { nix shell \"nixpkgs#$1\"; }";
     syntaxHighlighting.enable = true;
     autosuggestions.enable = true;
   };
