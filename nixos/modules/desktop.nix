@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
 
   # --- Display Manager ---
   services.displayManager.sddm.enable = true;
@@ -32,8 +32,15 @@
     firefox
     mpv
     wl-clipboard
-    dotool
+    inputs.voxtype.packages.${pkgs.system}.vulkan
+    inputs.voxtype.packages.${pkgs.system}.osd-gtk4
   ];
+
+  programs.ydotool = {
+    group = "wheel";
+    enable = true;
+  };
+
 
   # --- Fonts ---
   fonts.packages = with pkgs; [
