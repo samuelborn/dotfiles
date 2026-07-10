@@ -28,6 +28,7 @@
     nextcloud-client
     thunderbird
     signal-desktop
+    chromium
     firefox
     mpv
     wl-clipboard
