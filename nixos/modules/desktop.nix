@@ -32,6 +32,7 @@
     firefox
     mpv
     wl-clipboard
+    dotool
   ];
 
   # --- Fonts ---

@@ -33,6 +33,7 @@
     isNormalUser = true;
     extraGroups = [
       "wheel"
+      "input"
       "networkmanager"
       "i2c"
     ];
