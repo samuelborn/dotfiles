@@ -22,7 +22,7 @@
     lazygit
     ripgrep
     fd
-    btop
+    btop-rocm
     unzip
     curl
     tldr
