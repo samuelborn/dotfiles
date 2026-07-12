@@ -46,6 +46,7 @@
     enable = true;
     promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
     interactiveShellInit = "ns() { nix shell \"nixpkgs#$1\"; }";
+    shellAliases = { nd = "nix develop -c zsh"; };
     syntaxHighlighting.enable = true;
     autosuggestions.enable = true;
   };
