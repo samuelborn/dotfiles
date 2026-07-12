@@ -91,15 +91,16 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.pack.add({
     { src = "https://github.com/catppuccin/nvim",             name = "catppuccin" },
-    { src = "https://github.com/folke/snacks.nvim" },
-    { src = "https://github.com/stevearc/oil.nvim" },
     { src = "https://github.com/echasnovski/mini.surround" },
-    { src = "https://github.com/saghen/blink.lib" },
-    { src = "https://github.com/saghen/blink.cmp" },
-    { src = 'https://github.com/neovim/nvim-lspconfig' },
-    { src = "https://github.com/rafamadriz/friendly-snippets" },
-    { src = "https://github.com/nvim-lualine/lualine.nvim" },
     { src = "https://github.com/folke/lazydev.nvim" },
+    { src = "https://github.com/folke/snacks.nvim" },
+    { src = "https://github.com/nvim-mini/mini.diff" },
+    { src = "https://github.com/nvim-lualine/lualine.nvim" },
+    { src = "https://github.com/rafamadriz/friendly-snippets" },
+    { src = "https://github.com/saghen/blink.cmp" },
+    { src = "https://github.com/saghen/blink.lib" },
+    { src = "https://github.com/stevearc/oil.nvim" },
+    { src = 'https://github.com/neovim/nvim-lspconfig' },
 })
 
 require("catppuccin").setup {
@@ -130,6 +131,8 @@ require("oil").setup { view_options = { show_hidden = true } }
 vim.keymap.set("n", "-", "<cmd>Oil<cr>")
 
 require("mini.surround").setup()
+require("mini.diff").setup()
+vim.keymap.set("n", "<leader>go", MiniDiff.toggle_overlay)
 
 require('blink.cmp').build():pwait()
 require('blink.cmp').setup()

@@ -28,6 +28,10 @@
       "rev": "221ce6b2d999187044529f49da6554a92f740a96",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
+    "mini.diff": {
+      "rev": "be4ca6953040332d77a5a05bb5600152c5c36e7a",
+      "src": "https://github.com/nvim-mini/mini.diff"
+    },
     "mini.surround": {
       "rev": "9fd5ebef2b34cc4ac3c0f1811a6726ea6d92fa91",
       "src": "https://github.com/echasnovski/mini.surround"
