@@ -36,6 +36,7 @@
     python3
     uv
     fastfetch
+    opencode
 
     lua-language-server
     ruff
