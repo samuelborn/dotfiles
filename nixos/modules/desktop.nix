@@ -16,6 +16,12 @@
     pulse.enable = true;
   };
 
+  # --- Bluetooth ---
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+  };
+
   # --- Plasma ---
   services.desktopManager.plasma6.enable = true;
 
