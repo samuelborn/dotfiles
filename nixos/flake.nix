@@ -1,6 +1,6 @@
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.voxtype.url = "github:peteonrails/voxtype";
+  inputs.voxtype.url = "github:peteonrails/voxtype/v0.7.5";
 
   outputs =
     inputs@{ nixpkgs, ... }:
