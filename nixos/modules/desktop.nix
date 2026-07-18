@@ -24,6 +24,10 @@
 
   # --- Plasma ---
   services.desktopManager.plasma6.enable = true;
+  # Prevent KDE from missing the monitor's brightness control at login.
+  systemd.user.services.plasma-powerdevil = {
+    serviceConfig.ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
+  };
 
   # --- Keyboard ---
   services.xserver.xkb.layout = "eu";
