@@ -27,6 +27,7 @@
     curl
     tldr
     trash-cli
+    wl-clipboard
     cloc
     cargo
     rustc
@@ -36,7 +37,7 @@
     python3
     uv
     fastfetch
-    opencode
+    codex
 
     lua-language-server
     ruff
