@@ -2,6 +2,7 @@ promptToReturnFromSubprocess: false
 quitOnTopLevelReturn: true
 
 gui:
+  showCommandLog: false
   nerdFontsVersion: "3"
   showNumstatInFilesView: true
   expandFocusedSidePanel: true
@@ -9,3 +10,4 @@ gui:
 
 git:
   autoForwardBranches: allBranches
+
