@@ -141,4 +141,4 @@ vim.keymap.set('n', '<leader>gm', function()
   vim.cmd('DiffviewOpen ' .. branch .. '...HEAD')
 end)
 -- tab  switch files
--- ]c, [c hunks
+-- leader e to 
