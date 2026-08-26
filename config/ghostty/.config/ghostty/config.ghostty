@@ -1,5 +1,7 @@
 keybind = performable:ctrl+c=copy_to_clipboard
+keybind = ctrl+v=paste_from_clipboard
 theme = Catppuccin Mocha
 background = #1D1D20
 font-family = JetBrainsMono Nerd Font
 adjust-cell-height = 10%
+
