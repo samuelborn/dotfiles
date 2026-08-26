@@ -38,10 +38,15 @@
     uv
     fastfetch
     codex
+    qmk
+    dos2unix
 
     lua-language-server
     ruff
     rust-analyzer
     llvmPackages.clang-tools
+    prettierd
   ];
+
+    hardware.keyboard.qmk.enable = true;
 }
