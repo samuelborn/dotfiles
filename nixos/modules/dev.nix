@@ -1,6 +1,5 @@
 { pkgs, ... }: {
 
-  # --- Git ---
   programs.git = {
     enable = true;
     config = {
@@ -16,37 +15,36 @@
     };
   };
 
-  # --- Packages ---
   environment.systemPackages = with pkgs; [
-    neovim
-    lazygit
-    ripgrep
-    fd
     btop-rocm
-    unzip
+    cloc
     curl
+    delta
+    fastfetch
+    fd
+    imagemagick
+    lazygit
+    neovim
+    qmk
+    ripgrep
+    stow
     tldr
     trash-cli
-    wl-clipboard
-    cloc
-    cargo
-    rustc
-    clang
-    stow
     tree
-    python3
+    _7zz
     uv
-    fastfetch
-    codex
-    qmk
-    dos2unix
+    wl-clipboard
 
+    cargo
+    clang
+    llvmPackages.clang-tools
     lua-language-server
+    prettierd
+    python3
     ruff
     rust-analyzer
-    llvmPackages.clang-tools
-    prettierd
+    rustc
   ];
 
-    hardware.keyboard.qmk.enable = true;
+  hardware.keyboard.qmk.enable = true;
 }
