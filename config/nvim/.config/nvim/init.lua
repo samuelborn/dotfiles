@@ -20,6 +20,7 @@ vim.opt.undofile = true
 vim.opt.spelllang = "en,de"
 vim.opt.showmode = false
 vim.opt.shada = "!,'2000,<50,s10,h"
+vim.opt.fillchars:append({ diff = " ", eob = " " })
 
 vim.keymap.set("n", "<C-s>", "<cmd>wa<cr>")
 vim.keymap.set("n", "<leader>W", "<cmd>w !sudo tee % > /dev/null<cr>")
@@ -41,6 +42,22 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "*", "*zz")
 vim.keymap.set("n", "#", "#zz")
+vim.keymap.set("n", "<leader>cl", function() vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")) end)
+vim.keymap.set("n", "<leader>cp", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end)
+
+-- Alt-arrows move between nvim splits, falling through to tmux panes at the edge
+local function navigate(wincmd, tmux_flag)
+    local from = vim.api.nvim_get_current_win()
+    vim.cmd.wincmd(wincmd)
+    if vim.api.nvim_get_current_win() == from and vim.env.TMUX ~= nil then
+        vim.system({ "tmux", "select-pane", "-" .. tmux_flag }):wait()
+    end
+end
+
+vim.keymap.set({ "n", "t" }, "<M-Left>", function() navigate("h", "L") end)
+vim.keymap.set({ "n", "t" }, "<M-Down>", function() navigate("j", "D") end)
+vim.keymap.set({ "n", "t" }, "<M-Up>", function() navigate("k", "U") end)
+vim.keymap.set({ "n", "t" }, "<M-Right>", function() navigate("l", "R") end)
 
 vim.api.nvim_create_autocmd("BufReadPost", {
     callback = function(event)
@@ -72,8 +89,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.pack.add({
-    { src = "https://github.com/catppuccin/nvim",             name = "catppuccin" },
-    { src = "https://github.com/dlyongemallo/diffview-plus.nvim" },
+    { src = "https://github.com/catppuccin/nvim",                name = "catppuccin" },
     { src = "https://github.com/folke/snacks.nvim" },
     { src = "https://github.com/nvim-lualine/lualine.nvim" },
     { src = "https://github.com/nvim-mini/mini.diff" },
@@ -87,6 +103,21 @@ vim.pack.add({
     { src = 'https://github.com/neovim/nvim-lspconfig' },
 })
 
+require("catppuccin").setup {
+    color_overrides = {
+        mocha = {
+            base = "#1e1e1e",
+            mantle = "#181818",
+            crust = "#111111",
+            surface0 = "#323232",
+            surface1 = "#474747",
+            surface2 = "#5c5c5c",
+            overlay0 = "#707070",
+            overlay1 = "#848484",
+            overlay2 = "#999999",
+        },
+    },
+}
 vim.cmd.colorscheme("catppuccin")
 
 require("snacks").setup {
@@ -96,10 +127,10 @@ require("snacks").setup {
 }
 
 vim.keymap.set("n", "<leader><leader>", Snacks.picker.smart)
-vim.keymap.set("n", "<leader>fh", Snacks.picker.help)
-vim.keymap.set("n", "<leader>fg", Snacks.picker.grep)
-vim.keymap.set("n", "<leader>ff", Snacks.picker.files)
-vim.keymap.set("n", "<leader>rr", Snacks.picker.resume)
+vim.keymap.set("n", "<leader>sh", Snacks.picker.help)
+vim.keymap.set("n", "<leader>sg", Snacks.picker.grep)
+vim.keymap.set("n", "<leader>sf", Snacks.picker.files)
+vim.keymap.set("n", "<leader>sr", Snacks.picker.resume)
 vim.keymap.set("n", "gd", Snacks.picker.lsp_definitions)
 vim.keymap.set("n", "gr", Snacks.picker.lsp_references, { nowait = true })
 vim.keymap.set({ "n", "t", "i" }, "<C-\\>", Snacks.terminal.toggle)
@@ -135,10 +166,10 @@ require("conform").setup {
 
 vim.lsp.enable({ 'clangd', 'lua_ls', 'ruff', 'rust_analyzer' })
 
+require("diffview").setup { wrap_entries = false }
 vim.keymap.set('n', '<leader>gd', "<cmd>DiffviewToggle<cr>")
 vim.keymap.set('n', '<leader>gm', function()
-  local branch = vim.fn.system('git rev-parse --verify -q origin/main') ~= '' and 'origin/main' or 'origin/master'
-  vim.cmd('DiffviewOpen ' .. branch .. '...HEAD')
+    local branch = vim.fn.system('git rev-parse --verify -q origin/main') ~= '' and 'origin/main' or 'origin/master'
+    vim.cmd('DiffviewOpen ' .. branch)
 end)
--- tab  switch files
--- leader e to 
+
