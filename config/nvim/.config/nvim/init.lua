@@ -44,6 +44,8 @@ vim.keymap.set("n", "*", "*zz")
 vim.keymap.set("n", "#", "#zz")
 vim.keymap.set("n", "<leader>cl", function() vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")) end)
 vim.keymap.set("n", "<leader>cp", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end)
+vim.keymap.set("n", "H", "<cmd>bprevious<cr>")
+vim.keymap.set("n", "E", "<cmd>bnext<cr>")
 
 -- Alt-arrows move between nvim splits, falling through to tmux panes at the edge
 local function navigate(wincmd, tmux_flag)
