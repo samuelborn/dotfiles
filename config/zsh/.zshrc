@@ -21,6 +21,8 @@ zle -N fzf_zoxide
 # Keybindings
 bindkey -e
 bindkey '^o' fzf_zoxide
+bindkey -r '\ec'            # fzf cd widget: Alt+C is taken by tmux
+bindkey '^g' fzf-cd-widget    # Ctrl+G: go to directory
 bindkey "^H" backward-kill-word
 bindkey "^[[3;5~" kill-word
 bindkey "^[[1;5C" forward-word
