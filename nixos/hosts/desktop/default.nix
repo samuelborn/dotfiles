@@ -6,6 +6,7 @@
     ../../modules/dev.nix
     ../../modules/nix.nix
     ../../modules/gaming.nix
+    ../../modules/vm.nix
   ];
 
   hardware.graphics = {
