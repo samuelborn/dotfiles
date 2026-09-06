@@ -23,6 +23,7 @@
     fastfetch
     fd
     imagemagick
+    claude-code
     lazygit
     neovim
     qmk
