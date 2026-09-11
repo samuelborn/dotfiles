@@ -35,6 +35,7 @@
     firefox
     mpv
     qbittorrent
+    libreoffice-qt6-fresh
     inputs.voxtype.packages.${pkgs.system}.vulkan
     inputs.voxtype.packages.${pkgs.system}.osd-gtk4
   ];
