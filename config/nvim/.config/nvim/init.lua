@@ -24,10 +24,9 @@ vim.opt.fillchars:append({ diff = " ", eob = " " })
 
 vim.keymap.set("n", "<C-s>", "<cmd>wa<cr>")
 vim.keymap.set("n", "<leader>W", "<cmd>w !sudo tee % > /dev/null<cr>")
-vim.keymap.set("n", "<leader>q", "<cmd>q<cr>")
-vim.keymap.set("n", "<C-a>", "ggVG")
+vim.keymap.set("n", "<leader>a", "<cmd>q<cr>")
+vim.keymap.set("n", "<leader>A", "<cmd>qa<cr>")
 vim.keymap.set({ "n", "x" }, "<leader>y", '"+y')
-vim.keymap.set({ "n", "v" }, "<leader>l", function() require("conform").format({ lsp_format = "fallback" }) end)
 vim.keymap.set("n", "<leader>L", "gg=G<C-o>")
 vim.keymap.set("n", "<leader>Y", '"+y$')
 vim.keymap.set("n", "<A-y>", '<cmd>%y+<cr>')
@@ -38,8 +37,8 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>")
 vim.keymap.set("n", "ce", "cw")
 vim.keymap.set("n", "<leader>i", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-a>", "<C-u>zz")
+vim.keymap.set("n", "<C-'>", "<C-d>zz")
 vim.keymap.set("n", "*", "*zz")
 vim.keymap.set("n", "#", "#zz")
 vim.keymap.set("n", "<leader>cl", function() vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")) end)
@@ -60,6 +59,10 @@ vim.keymap.set({ "n", "t" }, "<M-Left>", function() navigate("h", "L") end)
 vim.keymap.set({ "n", "t" }, "<M-Down>", function() navigate("j", "D") end)
 vim.keymap.set({ "n", "t" }, "<M-Up>", function() navigate("k", "U") end)
 vim.keymap.set({ "n", "t" }, "<M-Right>", function() navigate("l", "R") end)
+vim.keymap.set({ "n", "t" }, "<C-Left>", "<cmd>vertical resize -5<cr>")
+vim.keymap.set({ "n", "t" }, "<C-Right>", "<cmd>vertical resize +5<cr>")
+vim.keymap.set({ "n", "t" }, "<C-Up>", "<cmd>resize +5<cr>")
+vim.keymap.set({ "n", "t" }, "<C-Down>", "<cmd>resize -5<cr>")
 
 vim.api.nvim_create_autocmd("BufReadPost", {
     callback = function(event)
@@ -91,8 +94,8 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.pack.add({
-    { src = "https://github.com/catppuccin/nvim",                name = "catppuccin" },
     { src = "https://github.com/folke/snacks.nvim" },
+    { src = "https://github.com/folke/tokyonight.nvim" },
     { src = "https://github.com/nvim-lualine/lualine.nvim" },
     { src = "https://github.com/nvim-mini/mini.diff" },
     { src = "https://github.com/nvim-mini/mini.surround" },
@@ -105,22 +108,7 @@ vim.pack.add({
     { src = 'https://github.com/neovim/nvim-lspconfig' },
 })
 
-require("catppuccin").setup {
-    color_overrides = {
-        mocha = {
-            base = "#1e1e1e",
-            mantle = "#181818",
-            crust = "#111111",
-            surface0 = "#323232",
-            surface1 = "#474747",
-            surface2 = "#5c5c5c",
-            overlay0 = "#707070",
-            overlay1 = "#848484",
-            overlay2 = "#999999",
-        },
-    },
-}
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("tokyonight-night")
 
 require("snacks").setup {
     picker = { enabled = true },
@@ -152,11 +140,11 @@ require("lualine").setup {
     options = { component_separators = "" },
     sections = {
         lualine_a = { "mode" },
-        lualine_b = { { "buffers", symbols = { alternate_file = "" } } },
+        lualine_b = { "buffers" },
         lualine_c = {},
         lualine_x = { "filetype", "lsp_status" },
-        lualine_y = { "diff" },
-        lualine_z = { "%L ln" },
+        lualine_y = { "%l / %L" },
+        lualine_z = {},
     },
 }
 
@@ -165,13 +153,13 @@ require("conform").setup {
         markdown = { "prettierd" },
     },
 }
+vim.keymap.set({ "n", "v" }, "<leader>l", function() require("conform").format({ lsp_format = "fallback" }) end)
 
-vim.lsp.enable({ 'clangd', 'lua_ls', 'ruff', 'rust_analyzer' })
+vim.lsp.enable({ 'clangd', 'lua_ls', 'ruff', 'rust_analyzer', 'ty' })
 
-require("diffview").setup { wrap_entries = false }
-vim.keymap.set('n', '<leader>gd', "<cmd>DiffviewToggle<cr>")
+require("diffview").setup({ wrap_entries = false })
+vim.keymap.set('n', '<leader>gd', "<cmd>DiffviewToggle --imply-local<cr>")
 vim.keymap.set('n', '<leader>gm', function()
     local branch = vim.fn.system('git rev-parse --verify -q origin/main') ~= '' and 'origin/main' or 'origin/master'
-    vim.cmd('DiffviewOpen ' .. branch)
+    vim.cmd('DiffviewOpen --imply-local' .. branch .. '... HEAD')
 end)
-
