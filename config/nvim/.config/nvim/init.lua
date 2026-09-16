@@ -8,7 +8,6 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.number = true
-vim.opt.cursorline = true
 vim.opt.signcolumn = 'no'
 vim.opt.showmode = false
 vim.opt.fillchars:append({ diff = " ", eob = " " })
@@ -43,13 +42,27 @@ vim.pack.add({
     { src = 'https://github.com/neovim/nvim-lspconfig' },
 })
 
+require("tokyonight").setup({
+    on_colors = function(colors)
+        colors.comment = require("tokyonight.util").blend_fg(colors.comment, 0.7)
+        colors.bg = "#19191e"
+        colors.bg_dark = "#141418"
+        colors.bg_dark1 = "#101013"
+        colors.bg_float = "#141418"
+        colors.bg_popup = "#141418"
+        colors.bg_sidebar = "#141418"
+        colors.bg_statusline = "#141418"
+        colors.bg_highlight = "#26272f"
+        colors.bg_visual = "#2d2e3a"
+    end,
+})
 vim.cmd.colorscheme("tokyonight-night")
 
 vim.lsp.enable({ 'clangd', 'lua_ls', 'ruff', 'rust_analyzer', 'ty' })
 
 vim.keymap.set("n", "<C-s>", "<cmd>wa<cr>")
-vim.keymap.set("n", "<leader>a", "<cmd>q<cr>")
-vim.keymap.set("n", "<leader>A", "<cmd>qa<cr>")
+vim.keymap.set("n", "<C-d>", "<cmd>q<cr>")
+vim.keymap.set("n", "<C-l>", "<cmd>qa<cr>")
 vim.keymap.set("n", "<leader>W", "<cmd>w !sudo tee % > /dev/null<cr>")
 
 vim.keymap.set({ "n", "x" }, "<leader>y", '"+y')
@@ -131,7 +144,7 @@ require("diffview").setup({ wrap_entries = false })
 vim.keymap.set('n', '<leader>gd', "<cmd>DiffviewToggle --imply-local<cr>")
 vim.keymap.set('n', '<leader>gm', function()
     local branch = vim.fn.system('git rev-parse --verify -q origin/main') ~= '' and 'origin/main' or 'origin/master'
-    vim.cmd('DiffviewOpen --imply-local' .. branch .. '... HEAD')
+    vim.cmd('DiffviewOpen --imply-local ' .. branch .. '...HEAD')
 end)
 
 require("lualine").setup {
