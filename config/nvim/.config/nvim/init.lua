@@ -28,8 +28,8 @@ vim.opt.updatetime = 250
 vim.opt.spelllang = "en,de"
 
 vim.pack.add({
+    { src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
     { src = "https://github.com/folke/snacks.nvim" },
-    { src = "https://github.com/folke/tokyonight.nvim" },
     { src = "https://github.com/nvim-lualine/lualine.nvim" },
     { src = "https://github.com/nvim-mini/mini.diff" },
     { src = "https://github.com/nvim-mini/mini.surround" },
@@ -42,21 +42,19 @@ vim.pack.add({
     { src = 'https://github.com/neovim/nvim-lspconfig' },
 })
 
-require("tokyonight").setup({
-    on_colors = function(colors)
-        colors.comment = require("tokyonight.util").blend_fg(colors.comment, 0.7)
-        colors.bg = "#19191e"
-        colors.bg_dark = "#141418"
-        colors.bg_dark1 = "#101013"
-        colors.bg_float = "#141418"
-        colors.bg_popup = "#141418"
-        colors.bg_sidebar = "#141418"
-        colors.bg_statusline = "#141418"
-        colors.bg_highlight = "#26272f"
-        colors.bg_visual = "#2d2e3a"
-    end,
+require("catppuccin").setup({
+    color_overrides = {
+        mocha = {
+            base = "#1b1b1e",
+            mantle = "#151517",
+            crust = "#0f0f11",
+            surface0 = "#2c2c30",
+            surface1 = "#414146",
+            surface2 = "#55555b",
+        },
+    },
 })
-vim.cmd.colorscheme("tokyonight-night")
+vim.cmd.colorscheme("catppuccin-mocha")
 
 vim.lsp.enable({ 'clangd', 'lua_ls', 'ruff', 'rust_analyzer', 'ty' })
 
@@ -89,6 +87,30 @@ vim.keymap.set("n", "<leader>i", function() vim.lsp.inlay_hint.enable(not vim.ls
 
 vim.keymap.set("n", "<leader>cl", function() vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")) end)
 vim.keymap.set("n", "<leader>cp", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end)
+
+-- Copy the enclosing symbol at the cursor as "ns::Class::name (path:line)" via LSP
+vim.keymap.set("n", "<leader>cr", function()
+    local row = vim.fn.line(".") - 1
+    local function find(symbols, prefix)
+        for _, sym in ipairs(symbols or {}) do
+            local range = sym.range or sym.location.range
+            if range.start.line <= row and row <= range["end"].line then
+                local name = prefix .. sym.name
+                return find(sym.children, name .. "::") or name .. " (" .. vim.fn.expand("%:p") .. ":" .. (range.start.line + 1) .. ")"
+            end
+        end
+    end
+    local params = { textDocument = vim.lsp.util.make_text_document_params() }
+    vim.lsp.buf_request(0, "textDocument/documentSymbol", params, function(_, symbols)
+        local ref = find(symbols, "")
+        if ref then
+            vim.fn.setreg("+", ref)
+            vim.notify("Copied " .. ref)
+        else
+            vim.notify("Symbol not found", vim.log.levels.WARN)
+        end
+    end)
+end)
 
 -- Alt-arrows move between nvim splits, falling through to tmux panes at the edge
 local function navigate(wincmd, tmux_flag)
@@ -140,7 +162,14 @@ require("mini.surround").setup()
 require("mini.diff").setup()
 vim.keymap.set("n", "<leader>go", MiniDiff.toggle_overlay)
 
-require("diffview").setup({ wrap_entries = false })
+require("diffview").setup({
+    wrap_entries = false,
+    hooks = {
+        diff_buf_win_enter = function(_, winid)
+            vim.wo[winid].foldenable = false
+        end,
+    },
+})
 vim.keymap.set('n', '<leader>gd', "<cmd>DiffviewToggle --imply-local<cr>")
 vim.keymap.set('n', '<leader>gm', function()
     local branch = vim.fn.system('git rev-parse --verify -q origin/main') ~= '' and 'origin/main' or 'origin/master'
@@ -185,5 +214,15 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("FileType", { pattern = { "help", "man" }, command = "wincmd L" })
 
 vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, { command = "wa" })
+
+-- Mouse wheel scrolls the hovered window without focusing it, which skips scrollbind syncing
+vim.api.nvim_create_autocmd("WinScrolled", {
+    callback = function()
+        local win = vim.fn.getmousepos().winid
+        if vim.v.event[tostring(win)] and win ~= vim.api.nvim_get_current_win() and vim.wo[win].scrollbind then
+            vim.api.nvim_win_call(win, function() vim.cmd("normal! \27") end)
+        end
+    end,
+})
 
 vim.api.nvim_create_autocmd("TextYankPost", { callback = function() vim.highlight.on_yank() end })
