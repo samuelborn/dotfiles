@@ -3,6 +3,7 @@ quitOnTopLevelReturn: true
 gui:
   showCommandLog: false
   nerdFontsVersion: "3"
+  sidePanelWidth: 0.2
   showNumstatInFilesView: true
   expandFocusedSidePanel: true
   expandedSidePanelWeight: 4
