@@ -12,6 +12,13 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    extraConfig.pipewire."99-echo-cancel"."context.modules" = [{
+      name = "libpipewire-module-echo-cancel";
+      args = {
+        "monitor.mode" = true;
+        "source.props"."filter.smart" = true;
+      };
+    }];
   };
 
   hardware.bluetooth = {
