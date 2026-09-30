@@ -33,6 +33,7 @@
     anki
     calibre
     firefox
+    brave-origin
     mpv
     qbittorrent
     libreoffice-qt6-fresh
