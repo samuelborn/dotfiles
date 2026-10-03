@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, ... }: {
 
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
@@ -44,9 +44,15 @@
     mpv
     qbittorrent
     libreoffice-qt6-fresh
-    inputs.voxtype.packages.${pkgs.system}.vulkan
-    inputs.voxtype.packages.${pkgs.system}.osd-gtk4
+    voxtype-vulkan
   ];
+
+  systemd.user.services.voxtype = {
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    path = [ pkgs.ydotool ];
+    serviceConfig.ExecStart = "${pkgs.voxtype-vulkan}/bin/voxtype";
+  };
 
   programs.ydotool = {
     group = "wheel";

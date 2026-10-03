@@ -1,0 +1,16 @@
+[hotkey]
+enabled = false
+
+[whisper]
+model = "large-v3"
+language = ["de", "en"]
+
+[osd]
+enabled = false
+
+[output]
+mode = "paste"
+paste_keys = "ctrl+shift+v"
+
+[output.notification]
+on_transcription = false
