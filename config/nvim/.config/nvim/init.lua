@@ -215,6 +215,8 @@ vim.api.nvim_create_autocmd("FileType", { pattern = { "help", "man" }, command =
 
 vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, { command = "wa" })
 
+vim.api.nvim_create_autocmd("VimResized", { command = "wincmd =" })
+
 -- Mouse wheel scrolls the hovered window without focusing it, which skips scrollbind syncing
 vim.api.nvim_create_autocmd("WinScrolled", {
     callback = function()
