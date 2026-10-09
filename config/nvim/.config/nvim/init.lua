@@ -79,9 +79,6 @@ vim.keymap.set("n", "#", "#zz")
 vim.keymap.set("n", "<C-a>", "<C-u>zz")
 vim.keymap.set("n", "<C-'>", "<C-d>zz")
 
-vim.keymap.set("n", "H", "<cmd>bprevious<cr>")
-vim.keymap.set("n", "E", "<cmd>bnext<cr>")
-
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>i", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
 
@@ -136,6 +133,7 @@ require("snacks").setup {
     terminal = { win = { wo = { winbar = '' } } },
 }
 vim.keymap.set("n", "<leader><leader>", Snacks.picker.smart)
+vim.keymap.set("n", "<leader>sb", Snacks.picker.buffers)
 vim.keymap.set("n", "<leader>sf", Snacks.picker.files)
 vim.keymap.set("n", "<leader>sg", Snacks.picker.grep)
 vim.keymap.set("n", "<leader>sh", Snacks.picker.help)
@@ -177,7 +175,7 @@ require("lualine").setup {
     options = { component_separators = "" },
     sections = {
         lualine_a = { "mode" },
-        lualine_b = { "buffers" },
+        lualine_b = { { "filename", path = 1 } },
         lualine_c = {},
         lualine_x = { "filetype", "lsp_status" },
         lualine_y = { "%l / %L" },
