@@ -28,16 +28,16 @@ vim.opt.updatetime = 250
 vim.opt.spelllang = "en,de"
 
 vim.pack.add({
-    { src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
+    { src = "https://github.com/catppuccin/nvim",                name = "catppuccin" },
     { src = "https://github.com/folke/snacks.nvim" },
     { src = "https://github.com/nvim-lualine/lualine.nvim" },
     { src = "https://github.com/nvim-mini/mini.diff" },
+    { src = "https://github.com/nvim-mini/mini.files" },
     { src = "https://github.com/nvim-mini/mini.surround" },
     { src = "https://github.com/rafamadriz/friendly-snippets" },
     { src = "https://github.com/saghen/blink.cmp" },
     { src = "https://github.com/saghen/blink.lib" },
     { src = "https://github.com/stevearc/conform.nvim" },
-    { src = "https://github.com/stevearc/oil.nvim" },
     { src = 'https://github.com/dlyongemallo/diffview-plus.nvim' },
     { src = 'https://github.com/neovim/nvim-lspconfig' },
 })
@@ -93,7 +93,8 @@ vim.keymap.set("n", "<leader>cr", function()
             local range = sym.range or sym.location.range
             if range.start.line <= row and row <= range["end"].line then
                 local name = prefix .. sym.name
-                return find(sym.children, name .. "::") or name .. " (" .. vim.fn.expand("%:p") .. ":" .. (range.start.line + 1) .. ")"
+                return find(sym.children, name .. "::") or
+                    name .. " (" .. vim.fn.expand("%:p") .. ":" .. (range.start.line + 1) .. ")"
             end
         end
     end
@@ -153,12 +154,16 @@ require("conform").setup {
 }
 vim.keymap.set({ "n", "v" }, "<leader>l", function() require("conform").format({ lsp_format = "fallback" }) end)
 
-require("oil").setup { view_options = { show_hidden = true } }
-vim.keymap.set("n", "-", "<cmd>Oil<cr>")
-
 require("mini.surround").setup()
 require("mini.diff").setup()
 vim.keymap.set("n", "<leader>go", MiniDiff.toggle_overlay)
+
+require("mini.files").setup { mappings = { go_in_plus = "<Right>", go_out_plus = "<Left>" } }
+vim.keymap.set("n", "<leader>e", function()
+    local path = vim.api.nvim_buf_get_name(0)
+    MiniFiles.open(vim.uv.fs_stat(path) and path or nil)
+    MiniFiles.reveal_cwd()
+end)
 
 -- global shortcut to enable/disable folding, off by default
 vim.opt.diffopt:append('context:99999')
