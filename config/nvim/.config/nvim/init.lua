@@ -162,19 +162,16 @@ require("mini.surround").setup()
 require("mini.diff").setup()
 vim.keymap.set("n", "<leader>go", MiniDiff.toggle_overlay)
 
-require("diffview").setup({
-    wrap_entries = false,
-    hooks = {
-        diff_buf_win_enter = function(_, winid)
-            vim.wo[winid].foldenable = false
-        end,
-    },
-})
-vim.keymap.set('n', '<leader>gd', "<cmd>DiffviewToggle --imply-local<cr>")
-vim.keymap.set('n', '<leader>gm', function()
-    local branch = vim.fn.system('git rev-parse --verify -q origin/main') ~= '' and 'origin/main' or 'origin/master'
-    vim.cmd('DiffviewOpen --imply-local ' .. branch .. '...HEAD')
+-- global shortcut to enable/disable folding, off by default
+vim.opt.diffopt:append('context:99999')
+vim.keymap.set('n', '<leader>gf', function()
+    if vim.o.diffopt:find('context:99999') then
+        vim.opt.diffopt:remove('context:99999')
+    else
+        vim.opt.diffopt:append('context:99999')
+    end
 end)
+vim.keymap.set('n', '<leader>gd', "<cmd>DiffviewToggle --imply-local<cr>")
 
 require("lualine").setup {
     options = { component_separators = "" },
