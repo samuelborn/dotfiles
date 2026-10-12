@@ -82,33 +82,12 @@ vim.keymap.set("n", "<C-'>", "<C-d>zz")
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>i", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end)
 
-vim.keymap.set("n", "<leader>cl", function() vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")) end)
-vim.keymap.set("n", "<leader>cp", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end)
-
--- Copy the enclosing symbol at the cursor as "ns::Class::name (path:line)" via LSP
-vim.keymap.set("n", "<leader>cr", function()
-    local row = vim.fn.line(".") - 1
-    local function find(symbols, prefix)
-        for _, sym in ipairs(symbols or {}) do
-            local range = sym.range or sym.location.range
-            if range.start.line <= row and row <= range["end"].line then
-                local name = prefix .. sym.name
-                return find(sym.children, name .. "::") or
-                    name .. " (" .. vim.fn.expand("%:p") .. ":" .. (range.start.line + 1) .. ")"
-            end
-        end
-    end
-    local params = { textDocument = vim.lsp.util.make_text_document_params() }
-    vim.lsp.buf_request(0, "textDocument/documentSymbol", params, function(_, symbols)
-        local ref = find(symbols, "")
-        if ref then
-            vim.fn.setreg("+", ref)
-            vim.notify("Copied " .. ref)
-        else
-            vim.notify("Symbol not found", vim.log.levels.WARN)
-        end
-    end)
-end)
+vim.keymap.set("n", "<leader>cl", function() vim.fn.setreg("+", vim.fn.expand("%:.") .. ":" .. vim.fn.line(".")) end)
+vim.keymap.set("n", "<leader>cL", function() vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")) end)
+vim.keymap.set("n", "<leader>cp", function() vim.fn.setreg("+", vim.fn.expand("%:.")) end)
+vim.keymap.set("n", "<leader>cP", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end)
+vim.keymap.set("n", "<leader>cr", function() vim.fn.setreg("+", vim.trim(vim.fn.getline(".")) .. " (" .. vim.fn.expand("%:.") .. ":" .. vim.fn.line(".") .. ")") end)
+vim.keymap.set("n", "<leader>cR", function() vim.fn.setreg("+", vim.trim(vim.fn.getline(".")) .. " (" .. vim.fn.expand("%:p") .. ":" .. vim.fn.line(".") .. ")") end)
 
 -- Alt-arrows move between nvim splits, falling through to tmux panes at the edge
 local function navigate(wincmd, tmux_flag)
@@ -128,11 +107,10 @@ vim.keymap.set({ "n", "t" }, "<C-Right>", "<cmd>vertical resize +5<cr>")
 vim.keymap.set({ "n", "t" }, "<C-Up>", "<cmd>resize +5<cr>")
 vim.keymap.set({ "n", "t" }, "<C-Down>", "<cmd>resize -5<cr>")
 
-require("snacks").setup {
+require("snacks").setup({
     picker = { enabled = true },
-    notifier = { enabled = true },
-    terminal = { win = { wo = { winbar = '' } } },
-}
+    notifier = { enabled = true }
+})
 vim.keymap.set("n", "<leader><leader>", Snacks.picker.smart)
 vim.keymap.set("n", "<leader>sb", Snacks.picker.buffers)
 vim.keymap.set("n", "<leader>sf", Snacks.picker.files)
@@ -141,24 +119,19 @@ vim.keymap.set("n", "<leader>sh", Snacks.picker.help)
 vim.keymap.set("n", "<leader>sr", Snacks.picker.resume)
 vim.keymap.set("n", "gd", Snacks.picker.lsp_definitions)
 vim.keymap.set("n", "gr", Snacks.picker.lsp_references, { nowait = true })
-vim.keymap.set({ "n", "t", "i" }, "<C-\\>", Snacks.terminal.toggle)
 vim.keymap.set({ "n", "t", "i" }, "<C-g>", Snacks.lazygit.open)
 
 require('blink.cmp').build():pwait()
 require('blink.cmp').setup()
 
-require("conform").setup {
-    formatters_by_ft = {
-        markdown = { "prettierd" },
-    },
-}
+require("conform").setup({ formatters_by_ft = { markdown = { "prettierd" } } })
 vim.keymap.set({ "n", "v" }, "<leader>l", function() require("conform").format({ lsp_format = "fallback" }) end)
 
 require("mini.surround").setup()
 require("mini.diff").setup()
 vim.keymap.set("n", "<leader>go", MiniDiff.toggle_overlay)
 
-require("mini.files").setup { mappings = { go_in_plus = "<Right>", go_out_plus = "<Left>" } }
+require("mini.files").setup { mappings = { go_in_plus = "<Enter>", go_out_plus = "<Esc>" } }
 vim.keymap.set("n", "<leader>e", function()
     local path = vim.api.nvim_buf_get_name(0)
     MiniFiles.open(vim.uv.fs_stat(path) and path or nil)
@@ -204,7 +177,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "markdown", "text", "latex", "tex", "plaintex", "typst" },
+    pattern = { "markdown", "text", "latex", "tex", "plaintex", "typst", "rst" },
     callback = function()
         vim.opt_local.spell = true
         vim.opt_local.wrap = true
@@ -213,9 +186,9 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("FileType", { pattern = { "help", "man" }, command = "wincmd L" })
 
-vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, { command = "wa" })
-
 vim.api.nvim_create_autocmd("VimResized", { command = "wincmd =" })
+
+vim.api.nvim_create_autocmd("TextYankPost", { callback = function() vim.highlight.on_yank() end })
 
 -- Mouse wheel scrolls the hovered window without focusing it, which skips scrollbind syncing
 vim.api.nvim_create_autocmd("WinScrolled", {
@@ -227,4 +200,3 @@ vim.api.nvim_create_autocmd("WinScrolled", {
     end,
 })
 
-vim.api.nvim_create_autocmd("TextYankPost", { callback = function() vim.highlight.on_yank() end })
