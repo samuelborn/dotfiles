@@ -31,6 +31,7 @@ bindkey "^[[3~" delete-char
 
 # Useful Aliases
 alias n="nvim"
+alias nd="nvim +\"DiffviewOpen --imply-local\""
 alias g="lazygit"
 alias rm="trash"
 alias cd="z"
