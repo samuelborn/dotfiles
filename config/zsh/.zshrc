@@ -123,6 +123,20 @@ alias gwipe="git reset --hard HEAD && git clean -fd"
 alias gnuke="git reset --hard HEAD && git clean -ffdx && git submodule foreach --recursive 'git reset --hard HEAD && git clean -ffdx' && git submodule update --init --recursive --force"
 alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign --message "--wip-- [skip ci]"'
 alias gunwip='git rev-list --max-count=1 --format="%s" HEAD | grep -q -- "--wip--" && git reset HEAD~1'
+function gwt() {
+  local b=change-${1#change-}
+  git fetch -q --no-tags origin "+refs/heads/$b:refs/remotes/origin/$b" 2>/dev/null
+  git worktree add --guess-remote ~/$b && cd ~/$b
+}
+function prune-worktrees() {
+  local d
+  for d in ~/*(/N); do
+    [[ -f $d/.git ]] || continue
+    git -C $d fetch -q origin main &&
+    git -C $d merge-base --is-ancestor HEAD origin/main &&
+    git -C $d worktree remove --force $d && echo "removed $d"
+  done
+}
 
 # Bind arrow keys to search history based on the typed command prefix.
 autoload -U up-line-or-beginning-search
