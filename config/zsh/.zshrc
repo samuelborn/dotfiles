@@ -1,3 +1,6 @@
+# Auto-start tmux
+[[ -o interactive && -z "$TMUX" ]] && exec tmux new -A -s main
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -10,6 +13,13 @@ autoload -Uz compinit && compinit -d ~/.config/.zcompdump
 setopt no_case_glob
 setopt share_history
 setopt hist_ignore_all_dups
+
+# Plugins (on NixOS these are loaded by programs.zsh in nixos/modules/system.nix)
+[[ -r ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme ]] && source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme
+[[ -r /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+[[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ ! -e /etc/NIXOS ]] && (( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
+[[ ! -e /etc/NIXOS ]] && (( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
 # fzf-zoxide integration
 function fzf_zoxide() { 
@@ -32,6 +42,9 @@ bindkey "^[[3~" delete-char
 # Useful Aliases
 alias n="nvim"
 alias nd="nvim +\"DiffviewOpen --imply-local\""
+alias c="claude"
+alias cc="claude --continue"
+alias cr="claude --resume"
 alias g="lazygit"
 alias rm="trash"
 alias cd="z"
@@ -45,6 +58,7 @@ alias .....="cd ../../../.."
 alias venv="source venv/bin/activate || python -m venv venv && source venv/bin/activate"
 function md() { mkdir -p "$1" && cd "$1" }
 function o() { xdg-open $1 &> /dev/null &}
+function apti() { apt-cache pkgnames | fzf -m --height=10 --reverse | xargs -r sudo apt install -y }
 
 # git aliases
 alias gs="git status --short"
@@ -72,3 +86,6 @@ bindkey "^[[B" down-line-or-beginning-search
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Must be sourced last
+[[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
