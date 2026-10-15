@@ -56,6 +56,26 @@ require("catppuccin").setup({
 })
 vim.cmd.colorscheme("catppuccin-mocha")
 
+-- The Fenix toolchain ships rust-analyzer-proc-macro-srv in bin/, but rust-analyzer only
+-- searches the sysroot's libexec/ and lib/ for it
+local ra_before_init = vim.lsp.config.rust_analyzer.before_init
+vim.lsp.config('rust_analyzer', {
+    before_init = function(params, config)
+        local root = config.root_dir and vim.fs.root(config.root_dir, 'toolchain')
+        local srv = root and vim.fs.joinpath(root, 'toolchain/bin/rust-analyzer-proc-macro-srv')
+        if srv and vim.uv.fs_stat(srv) then
+            -- Extend in place: the client already holds this table as client.settings and answers
+            -- rust-analyzer's workspace/configuration pulls from it. A replacement table would
+            -- only reach the initializationOptions, which those pulls then override.
+            config.settings = config.settings or {}
+            local ra = config.settings['rust-analyzer'] or {}
+            config.settings['rust-analyzer'] = ra
+            ra.procMacro = vim.tbl_extend('force', ra.procMacro or {}, { server = srv })
+        end
+        if ra_before_init then ra_before_init(params, config) end
+    end,
+})
+
 vim.lsp.enable({ 'clangd', 'lua_ls', 'ruff', 'rust_analyzer', 'ty' })
 
 vim.keymap.set("n", "<C-s>", "<cmd>wa<cr>")
@@ -86,8 +106,8 @@ vim.keymap.set("n", "<leader>cl", function() vim.fn.setreg("+", vim.fn.expand("%
 vim.keymap.set("n", "<leader>cL", function() vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")) end)
 vim.keymap.set("n", "<leader>cp", function() vim.fn.setreg("+", vim.fn.expand("%:.")) end)
 vim.keymap.set("n", "<leader>cP", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end)
-vim.keymap.set("n", "<leader>cr", function() vim.fn.setreg("+", vim.trim(vim.fn.getline(".")) .. " (" .. vim.fn.expand("%:.") .. ":" .. vim.fn.line(".") .. ")") end)
-vim.keymap.set("n", "<leader>cR", function() vim.fn.setreg("+", vim.trim(vim.fn.getline(".")) .. " (" .. vim.fn.expand("%:p") .. ":" .. vim.fn.line(".") .. ")") end)
+vim.keymap.set("n", "<leader>cr", function() vim.fn.setreg("+", "`" .. vim.trim(vim.fn.getline(".")) .. "` (" .. vim.fn.expand("%:.") .. ":" .. vim.fn.line(".") .. ")") end)
+vim.keymap.set("n", "<leader>cR", function() vim.fn.setreg("+", "`" .. vim.trim(vim.fn.getline(".")) .. "` (" .. vim.fn.expand("%:p") .. ":" .. vim.fn.line(".") .. ")") end)
 
 -- Alt-arrows move between nvim splits, falling through to tmux panes at the edge
 local function navigate(wincmd, tmux_flag)
@@ -131,7 +151,22 @@ require("mini.surround").setup()
 require("mini.diff").setup()
 vim.keymap.set("n", "<leader>go", MiniDiff.toggle_overlay)
 
-require("mini.files").setup { mappings = { go_in_plus = "<Enter>", go_out_plus = "<Esc>" } }
+-- WSL has no Linux browser, so the rendered page is handed to Windows by its UNC path
+vim.keymap.set("n", "<leader>m", function()
+    local html = vim.fn.tempname() .. ".html"
+    local res = vim.system(
+        {
+            "pandoc", "-f", "gfm", "-s", "--metadata", "pagetitle=" .. vim.fn.expand("%:t"),
+            "-H", vim.fn.stdpath("config") .. "/markdown-preview.html",
+            "-o", html,
+        },
+        { stdin = vim.api.nvim_buf_get_lines(0, 0, -1, false) }
+    ):wait()
+    if res.code ~= 0 then return vim.notify(res.stderr, vim.log.levels.ERROR) end
+    vim.system({ "explorer.exe", vim.trim(vim.fn.system({ "wslpath", "-w", html })) })
+end)
+
+require("mini.files").setup { mappings = { go_in_plus = "<Enter>", go_out_plus = "<Left>" } }
 vim.keymap.set("n", "<leader>e", function()
     local path = vim.api.nvim_buf_get_name(0)
     MiniFiles.open(vim.uv.fs_stat(path) and path or nil)

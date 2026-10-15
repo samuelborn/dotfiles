@@ -1,0 +1,177 @@
+<!-- Pandoc header include for <leader>m; placed after pandoc's own styles so these rules win -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #262624;
+    --sunken: #1f1e1d;
+    --raised: #30302e;
+    --rule: #3d3d3a;
+    --text: #e5e3da;
+    --strong: #faf9f5;
+    --muted: #a3a097;
+    --faint: #75736c;
+    --clay: #d97757;
+    --clay-soft: #e8a184;
+
+    --serif: "Source Serif 4", "Iowan Old Style", Charter, Georgia, serif;
+    --sans: "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  }
+
+  html {
+    background: var(--bg);
+    color: var(--text);
+    color-scheme: dark;
+  }
+
+  body {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 5rem 1.5rem 8rem;
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.7;
+    font-optical-sizing: auto;
+    hyphens: manual;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: rgba(217, 119, 87, 0.35); }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--serif);
+    font-weight: 500;
+    color: var(--strong);
+    letter-spacing: -0.012em;
+    line-height: 1.25;
+  }
+
+  h1 { font-size: 2.3rem; margin: 0 0 2.5rem; }
+  h2 { font-size: 1.55rem; margin: 3.5rem 0 1rem; }
+  h3 { font-size: 1.2rem; font-weight: 600; margin: 2.5rem 0 0.75rem; }
+  h4, h5, h6 {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 2rem 0 0.5rem;
+  }
+
+  /* A short clay rule under the title marks it without a full-width border */
+  h1::after {
+    content: "";
+    display: block;
+    width: 2.5rem;
+    height: 2px;
+    margin-top: 1.25rem;
+    background: var(--clay);
+  }
+
+  p { margin: 0 0 1.25em; }
+  strong { color: var(--strong); font-weight: 600; }
+
+  a, a:visited {
+    color: var(--clay-soft);
+    text-decoration: underline;
+    text-decoration-color: rgba(217, 119, 87, 0.4);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color 0.15s;
+  }
+  a:hover { text-decoration-color: var(--clay); }
+
+  ul, ol { padding-left: 1.4em; margin: 0 0 1.25em; }
+  li { margin: 0.3em 0; }
+  li::marker { color: var(--clay); }
+  ol > li::marker { font-family: var(--sans); font-size: 0.85em; }
+
+  blockquote {
+    margin: 1.75em 0;
+    padding: 0.1em 0 0.1em 1.25em;
+    border-left: 2px solid var(--clay);
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  hr {
+    border: none;
+    height: auto;
+    margin: 3rem 0;
+    text-align: center;
+  }
+  hr::before {
+    content: "\2022  \2022  \2022";
+    color: var(--faint);
+    letter-spacing: 0.5em;
+  }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.82em;
+  }
+
+  :not(pre) > code {
+    background: var(--raised);
+    color: var(--strong);
+    padding: 0.12em 0.4em;
+    border-radius: 5px;
+  }
+
+  pre {
+    background: var(--sunken);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 1.1em 1.3em;
+    margin: 1.5em 0 1.75em;
+    overflow-x: auto;
+    line-height: 1.6;
+  }
+  pre code { color: var(--text); font-size: 0.8em; }
+  div.sourceCode { background: none; margin: 1.5em 0 1.75em; }
+  div.sourceCode pre { margin: 0; }
+
+  table {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    margin: 1.75em 0;
+    line-height: 1.5;
+  }
+  thead, tbody { border: none; }
+  th {
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: left;
+    padding: 0.6em 1.2em 0.6em 0;
+  }
+  td {
+    border-bottom: 1px solid rgba(61, 61, 58, 0.55);
+    padding: 0.6em 1.2em 0.6em 0;
+    vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td code, th code { font-size: 0.9em; }
+
+  img { border-radius: 8px; }
+
+  /* Warm token colors replacing pandoc's light default highlight theme */
+  code span.kw, code span.cf { color: #e0896b; font-weight: normal; }
+  code span.dt, code span.bu { color: #d4a27f; font-weight: normal; }
+  code span.st, code span.ch, code span.ss, code span.vs { color: #b5c08f; }
+  code span.dv, code span.bn, code span.fl, code span.cn { color: #e2b86b; }
+  code span.co, code span.do, code span.an, code span.cv, code span.in { color: var(--faint); font-style: italic; font-weight: normal; }
+  code span.fu { color: #a9bfd0; }
+  code span.op, code span.sc { color: var(--muted); }
+  code span.pp, code span.at, code span.im, code span.ex { color: #c9a0dc; font-weight: normal; }
+  code span.va, code span.ot { color: var(--text); }
+  code span.al, code span.er, code span.wa { color: #e06c6c; font-weight: normal; }
+</style>
