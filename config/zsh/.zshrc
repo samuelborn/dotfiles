@@ -47,8 +47,14 @@ setopt hist_ignore_all_dups
 [[ ! -e /etc/NIXOS ]] && (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
 # fzf-zoxide integration
-function fzf_zoxide() { 
-    LBUFFER+=$(zoxide query --list | fzf --reverse --height=40%)
+function fzf_zoxide() {
+    local dir=$(zoxide query --list | fzf --reverse --height=40%)
+    if [[ -n $dir ]]; then
+        cd "$dir"
+        # A widget doesn't redraw the prompt on its own, so p10k would keep showing the old directory.
+        local hook
+        for hook in $precmd_functions; do $hook; done
+    fi
     zle reset-prompt
 }
 zle -N fzf_zoxide
