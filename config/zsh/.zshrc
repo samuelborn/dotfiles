@@ -151,5 +151,19 @@ unset key
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Bypass the Zscaler proxy for the Bazel Central Registry. Through the proxy,
+# Bazel's registry fetches fail with "Unable to tunnel through proxy. Proxy
+# returns HTTP/1.0 502 Bad Gateway", even though curl through the same proxy
+# works. A Bazel server keeps the proxy env it started with, so run
+# `bazel shutdown` in each worktree after changing this.
+#
+# To check whether this is still needed, run this from a Fenix worktree. It
+# starts a throwaway Bazel server with empty caches and the proxy in use, and
+# leaves the real caches alone:
+#   env -u no_proxy -u NO_PROXY bazel --output_base="$(mktemp -d)" \
+#       mod deps --repository_cache="$(mktemp -d)"
+# If it succeeds, the proxy no longer blocks Bazel and this can be removed.
+export no_proxy="bcr.bazel.build${no_proxy:+,$no_proxy}" NO_PROXY="bcr.bazel.build${NO_PROXY:+,$NO_PROXY}"
+
 # Must be sourced last
 [[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
