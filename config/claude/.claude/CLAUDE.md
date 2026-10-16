@@ -2,8 +2,11 @@
 - Never commit or push anything.
 - After touching rust code in the end always make a /polish-rustdoc pass.
 - Only boot/run tests when told to.
+- When working on a new jira ticket, make sure the story is in the correct state, e.g. in progress
 
-## Fenix OS repo (~/os): reference code for conventions
+## Fenix OS repo
+
+- Always use the `changie` tool for writing entries in ~/os/.changes/unreleased/Fixed-<date>-<time>.yaml
 
 The repo has no single agreed convention yet. When looking for code to copy style from, use these:
 
