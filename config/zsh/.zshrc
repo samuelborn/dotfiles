@@ -53,10 +53,20 @@ function fzf_zoxide() {
 }
 zle -N fzf_zoxide
 
+# Ctrl+Z at the prompt resumes the last suspended job; a half-typed line is restored afterwards.
+function fg_widget() {
+    (( $#jobstates )) || return
+    zle push-input
+    BUFFER=fg
+    zle accept-line
+}
+zle -N fg_widget
+
 # Keybindings
 bindkey -e
 WORDCHARS='*?_[]~'   # stop word motions/kills at / . - = and shell syntax, e.g. one path component per Ctrl+Backspace
 bindkey '^o' fzf_zoxide
+bindkey '^z' fg_widget
 bindkey -r '\ec'            # fzf cd widget: Alt+C is taken by tmux
 bindkey '^g' fzf-cd-widget    # Ctrl+G: go to directory
 bindkey "^H" backward-kill-word
