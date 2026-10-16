@@ -43,7 +43,7 @@ setopt hist_ignore_all_dups
 [[ -r ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme ]] && source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ -r /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ ! -e /etc/NIXOS ]] && (( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
+[[ ! -e /etc/NIXOS ]] && (( $+commands[zoxide] )) && eval "$(zoxide init zsh --cmd cd)"
 [[ ! -e /etc/NIXOS ]] && (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
 # fzf-zoxide integration
@@ -93,7 +93,6 @@ alias cc="claude --continue"
 alias cr="claude --resume"
 alias g="lazygit"
 alias rm="trash"
-alias cd="z"
 alias fd="fd --hidden --no-ignore"
 alias ls="ls --color=auto -1"
 alias ll="ls -Ahl"
