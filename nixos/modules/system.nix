@@ -40,5 +40,8 @@
   };
   environment.systemPackages = with pkgs; [ zsh-powerlevel10k ];
   programs.fzf.keybindings = true;
-  programs.zoxide.enable = true;
+  programs.zoxide = {
+    enable = true;
+    flags = [ "--cmd" "cd" ];
+  };
 }
