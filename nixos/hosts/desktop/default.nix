@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
     ../../modules/system.nix
     ../../modules/desktop.nix
+    ../../modules/hyprland.nix
     ../../modules/dev.nix
     ../../modules/nix.nix
     ../../modules/gaming.nix
@@ -15,8 +16,7 @@
   };
   hardware.amdgpu.initrd.enable = true;
 
-  # --- DDC/CI (external monitor brightness over DisplayPort) ---
-  hardware.i2c.enable = true;
+  hardware.i2c.enable = true; # ddcutil sets the monitor brightness over i2c
 
   hardware.cpu.amd.updateMicrocode = true;
 

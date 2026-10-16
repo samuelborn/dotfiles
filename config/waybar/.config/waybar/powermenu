@@ -1,0 +1,9 @@
+#!/bin/sh
+case $(printf '%s\n' "Shut Down" Restart Suspend "Log Out" "Restart to UEFI" |
+    fuzzel --dmenu --hide-prompt --minimal-lines --width 16 --anchor top-right --x-margin 6 --y-margin 6) in
+    "Shut Down") systemctl poweroff ;;
+    Restart) systemctl reboot ;;
+    Suspend) systemctl suspend ;;
+    "Log Out") hyprctl dispatch 'hl.dsp.exit()' ;;
+    "Restart to UEFI") systemctl reboot --firmware-setup ;;
+esac

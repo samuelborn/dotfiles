@@ -1,0 +1,38 @@
+# nmtui colors, like nvim: catppuccin mocha on the darker nvim backgrounds.
+# Hex colors only work because ghostty sets COLORTERM to truecolor.
+# Each line is name then fg,bg. newt also reads equals signs inside comments, so keep them out.
+
+root=#cdd6f4,#1b1b1e
+roottext=#6c7086,#1b1b1e
+helpline=#6c7086,#1b1b1e
+shadow=#0f0f11,#0f0f11
+
+window=#cdd6f4,#151517
+border=#414146,#151517
+title=#b4befe,#151517
+label=#cdd6f4,#151517
+textbox=#cdd6f4,#151517
+acttextbox=#cdd6f4,#2c2c30
+entry=#cdd6f4,#2c2c30
+disentry=#6c7086,#151517
+checkbox=#cdd6f4,#151517
+actcheckbox=#151517,#b4befe
+
+# nmtui only uses compact buttons: unfocused is compactbutton, focused is button
+compactbutton=#cdd6f4,#151517
+button=#151517,#b4befe
+actbutton=#151517,#b4befe
+
+# actlistbox is the current row of an unfocused list and the border of a focused one
+listbox=#cdd6f4,#151517
+actlistbox=#b4befe,#151517
+actsellistbox=#151517,#b4befe
+sellistbox=#cdd6f4,#2c2c30
+emptyscale=,#2c2c30
+fullscale=,#b4befe
+
+# nmtui's own colorsets, read from NMT_NEWT_COLORS_FILE
+badLabel=#f38ba8,#151517
+plainLabel=#cdd6f4,#151517
+disabledButton=#6c7086,#151517
+textboxWithBackground=#cdd6f4,#2c2c30

@@ -1,0 +1,20 @@
+# Like the toasts in GNOME apps: a one-line pill at the bottom
+font=Adwaita Sans 11
+anchor=bottom-center
+layer=overlay
+width=400
+outer-margin=24
+# 7 + 32px icon + 7 = 46px tall, so a 23px radius makes a pill
+padding=7,18
+border-size=0
+border-radius=23
+background-color=#373739
+# mako only looks in /usr/share/icons/hicolor, which NixOS doesn't have
+icon-path=/run/current-system/sw/share/icons/hicolor
+max-icon-size=32
+format=<b>%s</b>  <span alpha="70%%">%b</span>
+default-timeout=4000
+
+# a readable screenshot thumbnail
+[app-name=Screenshot]
+max-icon-size=48

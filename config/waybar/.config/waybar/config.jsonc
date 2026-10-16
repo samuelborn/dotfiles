@@ -1,0 +1,94 @@
+// Icons come from style.css. Icon-only modules print " " because waybar hides empty ones.
+{
+  "layer": "top",
+  "height": 30,
+  "modules-left": ["ext/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "tray",
+    "idle_inhibitor",
+    "custom/brightness",
+    "custom/nightlight",
+    "network",
+    "network#vpn",
+    "bluetooth",
+    "wireplumber",
+    "custom/power",
+  ],
+
+  // not hyprland/workspaces: in waybar 0.15 its clicks use Hyprland's old command syntax, which the lua config rejects
+  "ext/workspaces": {
+    "on-click": "activate",
+  },
+  // A second click on a popup's icon closes it. No pkill -x: NixOS runs these apps as .<name>-wrapped.
+  "clock": {
+    "tooltip": false,
+    "format": "{:%a %d %b  %H:%M}",
+    "on-click": "pkill gnome-calendar || gnome-calendar",
+  },
+  "tray": {
+    "spacing": 20,
+  },
+  "idle_inhibitor": {
+    "tooltip": false,
+    "format": " ",
+  },
+  // These two are read at start and whenever the bar or a key changes them; no polling.
+  "custom/brightness": {
+    "tooltip": false,
+    "format": " ",
+    // The third line of output is the CSS class that picks the sun icon. If the monitor
+    // doesn't answer (e.g. just after waking up), show the full sun rather than no icon.
+    "exec": "ddcutil --brief getvcp 10 | awk '$3 == \"C\" { v = $4 } END { print \"\\n\\n\" (v == \"\" || v >= 75 ? \"high\" : v >= 25 ? \"medium\" : \"low\") }'",
+    "signal": 8,
+    "exec-on-event": false,
+    "on-click": "ddcutil setvcp 10 + 50; pkill -RTMIN+8 waybar",
+    "on-click-right": "ddcutil setvcp 10 - 50; pkill -RTMIN+8 waybar",
+  },
+  "custom/nightlight": {
+    "tooltip": false,
+    "format": " ",
+    "return-type": "json",
+    "exec": "pgrep -x wlsunset > /dev/null && echo {} || echo '{\"class\": \"off\"}'",
+    "signal": 9,
+    "exec-on-event": false,
+    // setsid, or wlsunset would die when waybar reloads
+    "on-click": "if pkill -x wlsunset; then pidwait -x wlsunset; else setsid -f wlsunset -t 2700 -l 51 -L 10; fi; pkill -RTMIN+9 waybar",
+  },
+  "network": {
+    "tooltip": false,
+    "interface": "enp*",
+    "format": " ",
+    "on-click": "pkill nmtui || ghostty --class=ghostty.nmtui --confirm-close-surface=false -e nmtui",
+  },
+  "network#vpn": {
+    "tooltip": false,
+    "interface": "wg*",
+    "format": " ",
+    // wg-sweden lives in NetworkManager, not in this repo
+    "on-click": "nmcli connection down wg-sweden || nmcli connection up wg-sweden",
+  },
+  "bluetooth": {
+    "tooltip": false,
+    "format": " ",
+    "on-click": "pkill overskride || overskride",
+    "on-click-right": "bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on",
+  },
+  "wireplumber": {
+    "tooltip": false,
+    "scroll-step": 5,
+    // become classes that pick the volume icon
+    "states": {
+      "high": 67,
+      "medium": 34,
+      "low": 0,
+    },
+    "on-click": "pkill pavucontrol || pavucontrol -t 3", // -t 3 opens on Output Devices
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+  },
+  "custom/power": {
+    "tooltip": false,
+    "format": " ",
+    "on-click": "~/.config/waybar/powermenu",
+  },
+}

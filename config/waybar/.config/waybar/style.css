@@ -1,0 +1,65 @@
+/* GNOME top bar look */
+window#waybar {
+  background: #000000;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* tray icons set their tooltips in code, where "tooltip": false can't reach */
+tooltip {
+  opacity: 0;
+}
+
+/* icons are Adwaita symbolic icons drawn as backgrounds, so they take the text color */
+.module {
+  min-width: 16px;
+  padding: 0 10px;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* the GTK theme gives buttons a border and a hover background */
+#workspaces button {
+  padding: 0 6px;
+  border: none;
+  background: none;
+  opacity: 0.5;
+}
+
+#workspaces button.active {
+  opacity: 1;
+}
+
+#wireplumber {
+  padding-left: 34px;
+  background-position: 10px center;
+}
+
+/* Adwaita has no coffee cup: an open eye keeps the screen awake */
+#idle_inhibitor.activated   { background-image: -gtk-icontheme("view-reveal-symbolic"); }
+#idle_inhibitor.deactivated { background-image: -gtk-icontheme("view-conceal-symbolic"); }
+/* half, outlined and full sun */
+#custom-brightness.low      { background-image: -gtk-icontheme("keyboard-brightness-symbolic"); }
+#custom-brightness.medium   { background-image: -gtk-icontheme("weather-clear-symbolic"); }
+#custom-brightness.high     { background-image: -gtk-icontheme("display-brightness-symbolic"); }
+#custom-nightlight          { background-image: -gtk-icontheme("weather-clear-night-symbolic"); }
+#network                    { background-image: -gtk-icontheme("network-wired-symbolic"); }
+#network.vpn                { background-image: -gtk-icontheme("network-vpn-symbolic"); }
+#bluetooth                  { background-image: -gtk-icontheme("bluetooth-active-symbolic"); }
+#wireplumber.low            { background-image: -gtk-icontheme("audio-volume-low-symbolic"); }
+#wireplumber.medium         { background-image: -gtk-icontheme("audio-volume-medium-symbolic"); }
+#wireplumber.high           { background-image: -gtk-icontheme("audio-volume-high-symbolic"); }
+#wireplumber.muted          { background-image: -gtk-icontheme("audio-volume-muted-symbolic"); }
+#custom-power               { background-image: -gtk-icontheme("system-shutdown-symbolic"); }
+
+/* off is the same icon, dimmed */
+#idle_inhibitor.deactivated,
+#custom-nightlight.off,
+#network.disconnected,
+#bluetooth.off,
+#bluetooth.disabled,
+#wireplumber.muted {
+  color: alpha(#ffffff, 0.5);
+}

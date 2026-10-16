@@ -1,0 +1,15 @@
+#!/bin/sh
+# Print: region, Super+Print: whole screen. Copies right away; clicking the
+# notification opens the shot in satty to draw on it, Enter saves and copies again.
+file=~/Pictures/Screenshots/$(date +%F_%H-%M-%S).png
+
+if [ "$1" = screen ]; then
+    grim "$file"
+else
+    grim -g "$(slurp -b 00000066 -c b4befeff)" "$file"
+fi || exit # e.g. Esc in slurp
+wl-copy --type image/png < "$file"
+
+action=$(notify-send --app-name=Screenshot --icon="$file" --action=default=Annotate "Screenshot copied" "Click to annotate")
+[ "$action" = default ] && satty --filename "$file" --output-filename "$file" --copy-command wl-copy \
+    --actions-on-enter save-to-clipboard,save-to-file,exit --disable-notifications

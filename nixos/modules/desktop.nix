@@ -1,10 +1,5 @@
 { pkgs, ... }: {
 
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "born";
-
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -25,10 +20,6 @@
     enable = true;
     powerOnBoot = false;
   };
-
-  services.desktopManager.plasma6.enable = true;
-
-  services.xserver.xkb.layout = "eu";
 
   environment.systemPackages = with pkgs; [
     ghostty
