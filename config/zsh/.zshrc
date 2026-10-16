@@ -48,14 +48,12 @@ function o() { xdg-open $1 &> /dev/null &}
 
 # git aliases
 alias gs="git status --short"
-alias gaa="git add"
 alias gaa="git add --all"
 alias gc="git commit --message"
 alias gca="git commit --all --message"
 alias gsw="git switch"
 alias gswc="git switch --create"
 alias gd="git diff"
-alias gl="git log --graph --decorate --oneline"
 alias gl="git pull"
 alias gp="git push"
 alias gwipe="git reset --hard HEAD && git clean -fd"

@@ -10,15 +10,10 @@
     ../../modules/vm.nix
   ];
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true; # 32-bit Vulkan/OpenGL for Steam
-  };
+  hardware.graphics.enable = true;
   hardware.amdgpu.initrd.enable = true;
 
   hardware.i2c.enable = true; # ddcutil sets the monitor brightness over i2c
-
-  hardware.cpu.amd.updateMicrocode = true;
 
   networking.hostName = "desktop";
 

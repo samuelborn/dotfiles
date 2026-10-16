@@ -38,7 +38,6 @@
     syntaxHighlighting.enable = true;
     autosuggestions.enable = true;
   };
-  environment.systemPackages = with pkgs; [ zsh-powerlevel10k ];
   programs.fzf.keybindings = true;
   programs.zoxide.enable = true;
 }

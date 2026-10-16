@@ -1,11 +1,9 @@
 { pkgs, ... }: {
 
-  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
-    alsa.support32Bit = true;
     pulse.enable = true;
     extraConfig.pipewire."99-echo-cancel"."context.modules" = [{
       name = "libpipewire-module-echo-cancel";
@@ -26,11 +24,9 @@
     nextcloud-client
     thunderbird
     signal-desktop
-    chromium
     spotify
     anki
     calibre
-    firefox
     brave-origin
     mpv
     qbittorrent

@@ -1,27 +1,12 @@
 { pkgs, ... }: {
 
-  programs.git = {
-    enable = true;
-    config = {
-      user.name = "Samuel Born";
-      user.email = "samuelborn@outlook.de";
-      init.defaultBranch = "main";
-      pull.rebase = true;
-      rebase.autoStash = true;
-      gpg.format = "ssh";
-      user.signingKey = "~/.ssh/id_ed25519.pub";
-      commit.gpgSign = true;
-      tag.gpgSign = true;
-    };
-  };
-
   environment.systemPackages = with pkgs; [
     btop-rocm
     cloc
-    curl
     delta
     fastfetch
     fd
+    git
     imagemagick
     claude-code
     lazygit
@@ -30,11 +15,11 @@
     ripgrep
     stow
     tldr
+    tmux
     trash-cli
     tree
     _7zz
     uv
-    wl-clipboard
 
     cargo
     clang
