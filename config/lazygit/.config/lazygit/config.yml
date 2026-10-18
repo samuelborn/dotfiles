@@ -9,6 +9,3 @@ gui:
   expandedSidePanelWeight: 4
 git:
   autoForwardBranches: allBranches
-  diffRenderers:
-    - colorArg: always
-      command: delta --paging=never

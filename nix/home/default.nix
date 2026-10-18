@@ -1,13 +1,13 @@
-{ ... }: {
+{
   imports = [
     ./hardware-configuration.nix
-    ../../modules/system.nix
-    ../../modules/desktop.nix
-    ../../modules/hyprland.nix
-    ../../modules/dev.nix
-    ../../modules/nix.nix
-    ../../modules/gaming.nix
-    ../../modules/vm.nix
+    ./system.nix
+    ./desktop.nix
+    ./hyprland.nix
+    ./dev.nix
+    ./nix.nix
+    ./gaming.nix
+    ./vm.nix
   ];
 
   hardware.graphics.enable = true;

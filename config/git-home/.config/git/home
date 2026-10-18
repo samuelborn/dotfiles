@@ -1,0 +1,12 @@
+[user]
+	email = samuelborn@outlook.de
+	signingKey = ~/.ssh/id_ed25519.pub
+
+[gpg]
+	format = ssh
+
+[commit]
+	gpgSign = true
+
+[tag]
+	gpgSign = true

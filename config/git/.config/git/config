@@ -1,10 +1,22 @@
 [user]
 	name = Samuel Born
-	email = samuelborn@outlook.de
-	signingKey = ~/.ssh/id_ed25519.pub
+
+[include]
+	path = home
+	path = work
 
 [init]
 	defaultBranch = main
+
+[diff]
+	algorithm = histogram
+
+[merge]
+	conflictStyle = zdiff3
+
+[fetch]
+	prune = true
+	pruneTags = true
 
 [pull]
 	rebase = true
@@ -12,11 +24,5 @@
 [rebase]
 	autoStash = true
 
-[gpg]
-	format = ssh
-
-[commit]
-	gpgSign = true
-
-[tag]
-	gpgSign = true
+[push]
+	autoSetupRemote = true

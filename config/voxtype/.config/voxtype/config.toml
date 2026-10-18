@@ -1,5 +1,8 @@
 [hotkey]
-enabled = false
+enabled = true
+key = "INSERT"
+modifiers = []
+mode = "push_to_talk"
 
 [whisper]
 model = "large-v3"

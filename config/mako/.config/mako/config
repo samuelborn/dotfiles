@@ -1,4 +1,3 @@
-# Like the toasts in GNOME apps: a one-line pill at the bottom
 font=Adwaita Sans 11
 anchor=bottom-center
 layer=overlay

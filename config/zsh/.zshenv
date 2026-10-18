@@ -1,14 +1,9 @@
-path+=(~/.cargo/bin)
-path+=(~/.local/bin)
-export PATH
+path+=(~/.cargo/bin ~/.local/bin)
 
+export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR=nvim
+export VISUAL=nvim
 export MANPAGER="nvim +Man!"
-export WORDCHAR={}
-export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh_histfile"
-export HISTSIZE=100000
-export SAVEHIST=100000
-
 export FZF_DEFAULT_OPTS="\
 --color=bg+:#363847
 --color=spinner:#f5e0dc

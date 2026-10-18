@@ -52,7 +52,6 @@
     "exec": "pgrep -x wlsunset > /dev/null && echo {} || echo '{\"class\": \"off\"}'",
     "signal": 9,
     "exec-on-event": false,
-    // setsid, or wlsunset would die when waybar reloads
     "on-click": "if pkill -x wlsunset; then pidwait -x wlsunset; else setsid -f wlsunset -t 2700 -l 51 -L 10; fi; pkill -RTMIN+9 waybar",
   },
   "network": {
@@ -65,7 +64,6 @@
     "tooltip": false,
     "interface": "wg*",
     "format": " ",
-    // wg-sweden lives in NetworkManager, not in this repo
     "on-click": "nmcli connection down wg-sweden || nmcli connection up wg-sweden",
   },
   "bluetooth": {

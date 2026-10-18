@@ -23,7 +23,7 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 vim.opt.undofile = true
-vim.opt.shada = "!,'2000,<50,s10,h"
+vim.opt.shada = "!,'2000,<50,s10,h,r/tmp/,r/private/"
 vim.opt.updatetime = 250
 vim.opt.spelllang = "en,de"
 
@@ -31,7 +31,6 @@ vim.pack.add({
     { src = "https://github.com/catppuccin/nvim",                name = "catppuccin" },
     { src = "https://github.com/folke/snacks.nvim" },
     { src = "https://github.com/nvim-lualine/lualine.nvim" },
-    { src = "https://github.com/nvim-mini/mini.diff" },
     { src = "https://github.com/nvim-mini/mini.files" },
     { src = "https://github.com/nvim-mini/mini.surround" },
     { src = "https://github.com/rafamadriz/friendly-snippets" },
@@ -86,22 +85,14 @@ vim.keymap.set("n", "<leader>cl", function() vim.fn.setreg("+", vim.fn.expand("%
 vim.keymap.set("n", "<leader>cL", function() vim.fn.setreg("+", vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")) end)
 vim.keymap.set("n", "<leader>cp", function() vim.fn.setreg("+", vim.fn.expand("%:.")) end)
 vim.keymap.set("n", "<leader>cP", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end)
-vim.keymap.set("n", "<leader>cr", function() vim.fn.setreg("+", vim.trim(vim.fn.getline(".")) .. " (" .. vim.fn.expand("%:.") .. ":" .. vim.fn.line(".") .. ")") end)
-vim.keymap.set("n", "<leader>cR", function() vim.fn.setreg("+", vim.trim(vim.fn.getline(".")) .. " (" .. vim.fn.expand("%:p") .. ":" .. vim.fn.line(".") .. ")") end)
+vim.keymap.set("n", "<leader>cr", function() vim.fn.setreg("+", "`" .. vim.trim(vim.fn.getline(".")) .. "` (" .. vim.fn.expand("%:.") .. ":" .. vim.fn.line(".") .. ")") end)
+vim.keymap.set("n", "<leader>cR", function() vim.fn.setreg("+", "`" .. vim.trim(vim.fn.getline(".")) .. "` (" .. vim.fn.expand("%:p") .. ":" .. vim.fn.line(".") .. ")") end)
 
--- Alt-arrows move between nvim splits, falling through to tmux panes at the edge
-local function navigate(wincmd, tmux_flag)
-    local from = vim.api.nvim_get_current_win()
-    vim.cmd.wincmd(wincmd)
-    if vim.api.nvim_get_current_win() == from and vim.env.TMUX ~= nil then
-        vim.system({ "tmux", "select-pane", "-" .. tmux_flag }):wait()
-    end
-end
-
-vim.keymap.set({ "n", "t" }, "<M-Left>", function() navigate("h", "L") end)
-vim.keymap.set({ "n", "t" }, "<M-Down>", function() navigate("j", "D") end)
-vim.keymap.set({ "n", "t" }, "<M-Up>", function() navigate("k", "U") end)
-vim.keymap.set({ "n", "t" }, "<M-Right>", function() navigate("l", "R") end)
+-- Alt-arrows move between splits
+vim.keymap.set({ "n", "t" }, "<M-Left>", "<cmd>wincmd h<cr>")
+vim.keymap.set({ "n", "t" }, "<M-Down>", "<cmd>wincmd j<cr>")
+vim.keymap.set({ "n", "t" }, "<M-Up>", "<cmd>wincmd k<cr>")
+vim.keymap.set({ "n", "t" }, "<M-Right>", "<cmd>wincmd l<cr>")
 vim.keymap.set({ "n", "t" }, "<C-Left>", "<cmd>vertical resize -5<cr>")
 vim.keymap.set({ "n", "t" }, "<C-Right>", "<cmd>vertical resize +5<cr>")
 vim.keymap.set({ "n", "t" }, "<C-Up>", "<cmd>resize +5<cr>")
@@ -128,24 +119,17 @@ require("conform").setup({ formatters_by_ft = { markdown = { "prettierd" } } })
 vim.keymap.set({ "n", "v" }, "<leader>l", function() require("conform").format({ lsp_format = "fallback" }) end)
 
 require("mini.surround").setup()
-require("mini.diff").setup()
-vim.keymap.set("n", "<leader>go", MiniDiff.toggle_overlay)
-
-require("mini.files").setup { mappings = { go_in_plus = "<Enter>", go_out_plus = "<Esc>" } }
+require("mini.files").setup { mappings = { go_in_plus = "<Enter>", go_out_plus = "<Left>" } }
 vim.keymap.set("n", "<leader>e", function()
     local path = vim.api.nvim_buf_get_name(0)
     MiniFiles.open(vim.uv.fs_stat(path) and path or nil)
     MiniFiles.reveal_cwd()
 end)
 
--- global shortcut to enable/disable folding, off by default
+-- Diffs show whole files; <leader>gf toggles folding of the unchanged lines
 vim.opt.diffopt:append('context:99999')
 vim.keymap.set('n', '<leader>gf', function()
-    if vim.o.diffopt:find('context:99999') then
-        vim.opt.diffopt:remove('context:99999')
-    else
-        vim.opt.diffopt:append('context:99999')
-    end
+    vim.cmd.set(vim.o.diffopt:find('context:99999') and 'diffopt-=context:99999' or 'diffopt+=context:99999')
 end)
 vim.keymap.set('n', '<leader>gd', "<cmd>DiffviewToggle --imply-local<cr>")
 
@@ -161,18 +145,12 @@ require("lualine").setup {
     },
 }
 
+-- Reopen files at the last cursor position; pcall skips marks that are unset or past the end
 vim.api.nvim_create_autocmd("BufReadPost", {
-    callback = function(event)
-        local mark = vim.api.nvim_buf_get_mark(event.buf, '"')
-        local lcount = vim.api.nvim_buf_line_count(event.buf)
-        if mark[1] > 0 and mark[1] <= lcount then
-            pcall(vim.api.nvim_win_set_cursor, 0, mark)
-        end
-    end,
+    callback = function(event) pcall(vim.api.nvim_win_set_cursor, 0, vim.api.nvim_buf_get_mark(event.buf, '"')) end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "*",
     callback = function() vim.opt.formatoptions:remove({ "o", "r" }) end,
 })
 
@@ -188,7 +166,7 @@ vim.api.nvim_create_autocmd("FileType", { pattern = { "help", "man" }, command =
 
 vim.api.nvim_create_autocmd("VimResized", { command = "wincmd =" })
 
-vim.api.nvim_create_autocmd("TextYankPost", { callback = function() vim.highlight.on_yank() end })
+vim.api.nvim_create_autocmd("TextYankPost", { callback = function() vim.hl.on_yank() end })
 
 -- Mouse wheel scrolls the hovered window without focusing it, which skips scrollbind syncing
 vim.api.nvim_create_autocmd("WinScrolled", {
