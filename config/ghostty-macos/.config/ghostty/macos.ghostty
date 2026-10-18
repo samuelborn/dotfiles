@@ -1,0 +1,2 @@
+# macOS renders points at 72 dpi vs 96 on Linux, so scale 10.5 by 4/3
+font-size = 14

@@ -3,6 +3,8 @@ theme = Catppuccin Mocha
 background = #1D1D20
 font-family = JetBrainsMono Nerd Font
 font-size = 10.5
+# Per-OS overrides, stowed only on that OS
+config-file = ?macos.ghostty
 adjust-cell-height = 10%
 window-padding-x = 6
 window-padding-y = 6
