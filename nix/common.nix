@@ -10,6 +10,7 @@
     neovim
     git
     lazygit
+    tmux
     stow
     ripgrep
     fd
@@ -33,7 +34,6 @@
     prettierd
     cargo
     rustc
-    clang
 
     zsh-powerlevel10k
     zsh-autosuggestions

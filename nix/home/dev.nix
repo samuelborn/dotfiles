@@ -2,6 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     btop-rocm
+    clang
     fastfetch
     qmk
   ];

@@ -6,9 +6,10 @@ inner = { horizontal = 8, vertical = 8 }
 outer = { left = 8, bottom = 8, top = 8, right = 8 }
 
 [mode.main.binding]
-ctrl-cmd-d = 'exec-and-forget open ~'
-ctrl-cmd-t = '''exec-and-forget pgrep -xq ghostty && osascript -e 'tell application "Ghostty" to new window'; open -a Ghostty'''
-ctrl-cmd-w = '''exec-and-forget pgrep -xq Safari && osascript -e 'tell application "Safari" to make new document'; open -a Safari'''
+alt-d = 'exec-and-forget open ~'
+alt-t = '''exec-and-forget pgrep -xq ghostty && osascript -e 'tell application "Ghostty" to new window'; open -a Ghostty'''
+alt-w = '''exec-and-forget pgrep -xq Safari && osascript -e 'tell application "Safari" to make new document'; open -a Safari'''
+alt-q = 'close --quit-if-last-window'
 
 alt-h = 'layout horizontal'
 alt-v = 'layout vertical'
@@ -29,6 +30,7 @@ ctrl-alt-right = 'resize width +50'
 ctrl-alt-up = 'resize height -50'
 ctrl-alt-down = 'resize height +50'
 
+alt-0 = 'workspace 0'
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
@@ -38,6 +40,7 @@ alt-6 = 'workspace 6'
 alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
+alt-shift-0 = 'move-node-to-workspace 0'
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
 alt-shift-3 = 'move-node-to-workspace 3'
@@ -52,8 +55,3 @@ alt-shift-9 = 'move-node-to-workspace 9'
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'
 run = 'layout floating'
-
-# Tabs titlebar makes AeroSpace mistake Ghostty windows for dialogs
-[[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
-run = 'layout tiling'

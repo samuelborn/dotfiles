@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 cd "$(dirname "$0")" || exit 1
-packages="btop claude ghostty git lazygit nvim zsh"
+packages="btop claude ghostty git lazygit nvim tmux zsh"
 if [ "$(uname)" = Darwin ]; then
   packages="$packages aerospace git-work"
 else

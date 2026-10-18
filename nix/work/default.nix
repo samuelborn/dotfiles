@@ -19,6 +19,8 @@
   system.primaryUser = "Samuel.Born";
 
   security.pam.services.sudo_local.touchIdAuth = true;
+  # pam_reattach lets Touch ID work inside tmux
+  security.pam.services.sudo_local.reattach = true;
 
   environment.systemPackages = with pkgs; [
     coreutils

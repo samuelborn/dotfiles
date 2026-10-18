@@ -1,3 +1,6 @@
+# Every terminal starts in tmux. -t 1 skips non-terminal shells (scripts, Claude Code), the tmux check a machine not yet rebuilt.
+[[ -z $TMUX && -t 1 ]] && (( $+commands[tmux] )) && exec tmux
+
 # Load direnv env before instant prompt so its "loading .envrc" output doesn't trigger p10k's console-output warning.
 emulate zsh -c "$(direnv export zsh)"
 
