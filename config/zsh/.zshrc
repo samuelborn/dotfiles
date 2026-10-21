@@ -151,7 +151,9 @@ alias gunwip='git log -1 --format=%s | grep -q -- --wip-- && git reset HEAD~1'
 function gwt() {
   local b=change-${1#change-}
   git fetch -q --no-tags origin "+refs/heads/$b:refs/remotes/origin/$b" 2>/dev/null
-  git worktree add --guess-remote ~/$b && cd ~/$b
+  git worktree add --guess-remote ~/$b &&
+  git -C ~/$b submodule update --init --recursive &&
+  cd ~/$b
 }
 function gwtr() {
   local d
