@@ -9,3 +9,9 @@ keybind = alt+arrow_right=unbind
 
 # Blank title instead of the default ghost emoji
 title = " "
+
+# Ghostty's macOS defaults turn Cmd+Left/Right into ^A/^E, which nvim insert
+# mode reads as "insert last text"/"copy char below". Send real Home/End
+# instead; zsh maps them to line start/end
+keybind = super+arrow_left=csi:H
+keybind = super+arrow_right=csi:F
