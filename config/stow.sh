@@ -2,7 +2,7 @@
 cd "$(dirname "$0")" || exit 1
 packages="btop claude ghostty git lazygit nvim tmux zsh"
 if [ "$(uname)" = Darwin ]; then
-  packages="$packages aerospace ghostty-macos git-work ssh-work swiftbar"
+  packages="$packages aerospace ghostty-macos git-work nvim-work ssh-work swiftbar"
 else
   packages="$packages fuzzel git-home hypr mako voxtype waybar"
 fi
