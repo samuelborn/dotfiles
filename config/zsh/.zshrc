@@ -153,6 +153,7 @@ function gwt() {
   git fetch -q --no-tags origin "+refs/heads/$b:refs/remotes/origin/$b" 2>/dev/null
   git worktree add --guess-remote ~/$b &&
   git -C ~/$b submodule update --init --recursive &&
+  { [[ ! -f ~/$b/.envrc ]] || direnv allow ~/$b } &&
   cd ~/$b
 }
 function gwtr() {
