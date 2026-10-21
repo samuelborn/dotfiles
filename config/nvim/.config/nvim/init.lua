@@ -88,15 +88,29 @@ vim.keymap.set("n", "<leader>cP", function() vim.fn.setreg("+", vim.fn.expand("%
 vim.keymap.set("n", "<leader>cr", function() vim.fn.setreg("+", "`" .. vim.trim(vim.fn.getline(".")) .. "` (" .. vim.fn.expand("%:.") .. ":" .. vim.fn.line(".") .. ")") end)
 vim.keymap.set("n", "<leader>cR", function() vim.fn.setreg("+", "`" .. vim.trim(vim.fn.getline(".")) .. "` (" .. vim.fn.expand("%:p") .. ":" .. vim.fn.line(".") .. ")") end)
 
--- Alt-arrows move between splits
-vim.keymap.set({ "n", "t" }, "<M-Left>", "<cmd>wincmd h<cr>")
-vim.keymap.set({ "n", "t" }, "<M-Down>", "<cmd>wincmd j<cr>")
-vim.keymap.set({ "n", "t" }, "<M-Up>", "<cmd>wincmd k<cr>")
-vim.keymap.set({ "n", "t" }, "<M-Right>", "<cmd>wincmd l<cr>")
-vim.keymap.set({ "n", "t" }, "<C-Left>", "<cmd>vertical resize -5<cr>")
-vim.keymap.set({ "n", "t" }, "<C-Right>", "<cmd>vertical resize +5<cr>")
-vim.keymap.set({ "n", "t" }, "<C-Up>", "<cmd>resize +5<cr>")
-vim.keymap.set({ "n", "t" }, "<C-Down>", "<cmd>resize -5<cr>")
+-- Ctrl-arrows move between splits. tmux hands these keys to nvim, so at the edge
+-- split nvim has to pass the move back to tmux or the key gets lost.
+local function navigate(wincmd, tmux_dir)
+    local win = vim.api.nvim_get_current_win()
+    vim.cmd.wincmd(wincmd)
+    if win == vim.api.nvim_get_current_win() and vim.env.TMUX then
+        vim.system({ "tmux", "select-pane", "-" .. tmux_dir })
+    end
+end
+vim.keymap.set({ "n", "t" }, "<C-Left>", function() navigate("h", "L") end)
+vim.keymap.set({ "n", "t" }, "<C-Down>", function() navigate("j", "D") end)
+vim.keymap.set({ "n", "t" }, "<C-Up>", function() navigate("k", "U") end)
+vim.keymap.set({ "n", "t" }, "<C-Right>", function() navigate("l", "R") end)
+vim.keymap.set({ "n", "t" }, "<C-S-Left>", "<cmd>vertical resize -5<cr>")
+vim.keymap.set({ "n", "t" }, "<C-S-Right>", "<cmd>vertical resize +5<cr>")
+vim.keymap.set({ "n", "t" }, "<C-S-Up>", "<cmd>resize +5<cr>")
+vim.keymap.set({ "n", "t" }, "<C-S-Down>", "<cmd>resize -5<cr>")
+
+-- Alt-arrows jump by word, like in other macOS text fields
+vim.keymap.set({ "n", "x" }, "<M-Left>", "b")
+vim.keymap.set({ "n", "x" }, "<M-Right>", "w")
+vim.keymap.set({ "i", "c" }, "<M-Left>", "<S-Left>")
+vim.keymap.set({ "i", "c" }, "<M-Right>", "<S-Right>")
 
 require("snacks").setup({
     picker = { enabled = true },

@@ -1,2 +1,8 @@
 # macOS renders points at 72 dpi vs 96 on Linux, so scale 10.5 by 4/3
 font-size = 14
+
+# Ghostty's macOS defaults turn Alt+Left/Right into word jumps (esc:b/esc:f),
+# which nvim insert mode misreads as Esc+b/f. Send real Alt+arrows instead;
+# zsh and nvim map them to word jumps
+keybind = alt+arrow_left=unbind
+keybind = alt+arrow_right=unbind

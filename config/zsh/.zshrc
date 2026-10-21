@@ -74,8 +74,8 @@ bindkey '^o' fzf_zoxide
 bindkey '^z' fg_widget
 bindkey "^H" backward-kill-word
 bindkey "^[[3;5~" kill-word
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1;5D" backward-word
+bindkey "^[[1;3C" forward-word   # Alt+Right
+bindkey "^[[1;3D" backward-word  # Alt+Left
 bindkey "^[[3~" delete-char
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line

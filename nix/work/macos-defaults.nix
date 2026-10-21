@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   system.defaults = {
     NSGlobalDomain = {
@@ -30,4 +31,17 @@
 
     screencapture.location = "~/Pictures/Screenshots";
   };
+
+  # Free Ctrl+arrows for tmux/nvim pane navigation: disable Mission Control (32),
+  # App Exposé (33) and Space switching (79, 81). -dict-add keeps other hotkeys.
+  system.activationScripts.postActivation.text = ''
+    sudo -u ${config.system.primaryUser} bash -c '
+      for spec in "32 126" "33 125" "79 123" "81 124"; do
+        set -- $spec
+        defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add $1 \
+          "<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>65535</integer><integer>$2</integer><integer>8650752</integer></array><key>type</key><string>standard</string></dict></dict>"
+      done
+      /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+    '
+  '';
 }

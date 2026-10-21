@@ -9,8 +9,8 @@ adjust-cell-height = 10%
 window-padding-x = 6
 window-padding-y = 6
 
-# Option acts as Alt in zsh/nvim
-macos-option-as-alt = true
+# Left Option acts as Alt in zsh/nvim; right Option types EurKEY umlauts
+macos-option-as-alt = left
 
 # Cmd+Q closes the window; app quits with the last one
 keybind = cmd+q=close_window
@@ -19,25 +19,3 @@ quit-after-last-window-closed = true
 confirm-close-surface = false
 # Windows, not tabs: AeroSpace tiles hidden tabs as empty windows
 keybind = cmd+t=new_window
-# Cmd+<num> sends Alt+<num> to tmux, since AeroSpace owns Alt+<num>
-# (on Linux, Hyprland uses Super+<num>, so Alt+<num> reaches tmux directly)
-keybind = cmd+1=esc:1
-keybind = cmd+digit_1=esc:1
-keybind = cmd+2=esc:2
-keybind = cmd+digit_2=esc:2
-keybind = cmd+3=esc:3
-keybind = cmd+digit_3=esc:3
-keybind = cmd+4=esc:4
-keybind = cmd+digit_4=esc:4
-keybind = cmd+5=esc:5
-keybind = cmd+digit_5=esc:5
-keybind = cmd+6=esc:6
-keybind = cmd+digit_6=esc:6
-keybind = cmd+7=esc:7
-keybind = cmd+digit_7=esc:7
-keybind = cmd+8=esc:8
-keybind = cmd+digit_8=esc:8
-keybind = cmd+9=esc:9
-keybind = cmd+digit_9=esc:9
-keybind = cmd+0=esc:0
-keybind = cmd+digit_0=esc:0
