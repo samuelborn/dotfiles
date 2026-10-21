@@ -6,3 +6,6 @@ font-size = 14
 # zsh and nvim map them to word jumps
 keybind = alt+arrow_left=unbind
 keybind = alt+arrow_right=unbind
+
+# Blank title instead of the default ghost emoji
+title = " "
