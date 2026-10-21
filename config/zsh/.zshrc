@@ -95,7 +95,12 @@ alias c="claude"
 alias cc="claude --continue"
 alias cr="claude --resume"
 alias g="lazygit"
-alias rm="trash"
+if [[ $OSTYPE == darwin* ]]; then
+  # macOS trash moves to ~/.Trash but rejects rm flags like -rf, so drop them
+  rm() { /usr/bin/trash "${@:#-*}" }
+else
+  alias rm="trash"
+fi
 alias fd="fd --hidden --no-ignore"
 alias ls="ls --color=auto -1"
 alias ll="ls -Ahl"

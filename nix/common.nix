@@ -16,7 +16,6 @@
     bat
     tldr
     python3
-    trash-cli
     claude-code
     cloc
     _7zz
