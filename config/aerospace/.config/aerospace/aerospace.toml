@@ -26,10 +26,8 @@ alt-shift-down = 'move down'
 alt-shift-up = 'move up'
 alt-shift-right = 'move right'
 
-ctrl-alt-shift-left = 'resize width -50'
-ctrl-alt-shift-right = 'resize width +50'
-ctrl-alt-shift-up = 'resize height -50'
-ctrl-alt-shift-down = 'resize height +50'
+alt-minus = 'resize smart -50'
+alt-keypadPlus = 'resize smart +50'
 
 alt-0 = 'workspace 0'
 alt-1 = 'workspace 1'
