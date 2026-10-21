@@ -1,5 +1,7 @@
 config-version = 2
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+# refresh the SwiftBar workspace indicator (config/swiftbar)
+exec-on-workspace-change = ['/usr/bin/open', '-g', 'swiftbar://refreshplugin?name=aerospace']
 
 [gaps]
 inner = { horizontal = 8, vertical = 8 }

@@ -12,6 +12,7 @@
     casks = [
       "ghostty"
       "eurkey-next"
+      "swiftbar" # menu bar indicator for AeroSpace workspaces
     ];
   };
 }

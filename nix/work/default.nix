@@ -61,5 +61,13 @@
     };
   };
 
+  # SwiftBar comes from Homebrew; its plugin lives in config/swiftbar
+  system.defaults.CustomUserPreferences."com.ameba.SwiftBar".PluginDirectory =
+    "/Users/${config.system.primaryUser}/.config/swiftbar";
+  launchd.user.agents.swiftbar = {
+    command = "/Applications/SwiftBar.app/Contents/MacOS/SwiftBar";
+    serviceConfig.RunAtLoad = true;
+  };
+
   system.stateVersion = 6;
 }
