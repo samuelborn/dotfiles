@@ -1,9 +1,4 @@
 {
-  "permissions": {
-    "deny": [
-      "Edit(**/.changes/unreleased/**)"
-    ]
-  },
   "model": "opus",
   "statusLine": {
     "type": "command",
