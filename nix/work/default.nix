@@ -49,7 +49,10 @@
   environment.systemPackages = with pkgs; [
     coreutils
     aerospace
+    btop
     nh
+    qmk # macOS needs no udev rules, unlike hardware.keyboard.qmk on NixOS
+    dos2unix # required by `qmk doctor`
   ];
 
   # not services.aerospace: it forces a generated --config-path, ignoring ~/.config/aerospace

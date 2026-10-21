@@ -12,6 +12,8 @@
     casks = [
       "ghostty"
       "eurkey-next"
+      "obsidian"
+      "mac-mouse-fix" # mouse side buttons as Back/Forward in Safari
       "swiftbar" # menu bar indicator for AeroSpace workspaces
     ];
   };
