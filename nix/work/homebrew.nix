@@ -9,6 +9,9 @@
   homebrew = {
     enable = true;
     onActivation.cleanup = "uninstall";
+    brews = [
+      "container" # Apple Linux containers, used to check glibc output
+    ];
     casks = [
       "ghostty"
       "eurkey-next"
