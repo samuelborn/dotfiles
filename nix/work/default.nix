@@ -51,6 +51,7 @@
     aerospace
     btop
     nh
+    glab
     qmk # macOS needs no udev rules, unlike hardware.keyboard.qmk on NixOS
     dos2unix # required by `qmk doctor`
   ];
