@@ -140,9 +140,9 @@ vim.keymap.set("n", "<leader>e", function()
     MiniFiles.reveal_cwd()
 end)
 
--- Diffs show whole files; <leader>gf toggles folding of the unchanged lines
+-- Diffs show whole files; <leader>f toggles folding of the unchanged lines
 vim.opt.diffopt:append('context:99999')
-vim.keymap.set('n', '<leader>gf', function()
+vim.keymap.set('n', '<leader>f', function()
     vim.cmd.set(vim.o.diffopt:find('context:99999') and 'diffopt-=context:99999' or 'diffopt+=context:99999')
 end)
 vim.keymap.set('n', '<leader>gd', "<cmd>DiffviewToggle --imply-local<cr>")
