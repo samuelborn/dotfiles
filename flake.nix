@@ -6,6 +6,9 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
+    # Determinate Nix on the Mac: the Ayumi .envrc wants it, and it reads Zscaler's CA from the keychain
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
   };
 
   outputs =
@@ -14,6 +17,7 @@
       nixpkgs,
       nix-darwin,
       nix-homebrew,
+      determinate,
     }:
     {
       formatter = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-darwin" ] (
@@ -32,6 +36,7 @@
           ./nix/common.nix
           ./nix/work
           nix-homebrew.darwinModules.nix-homebrew
+          determinate.darwinModules.default
           { system.configurationRevision = self.rev or self.dirtyRev or null; }
         ];
       };

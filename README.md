@@ -38,25 +38,25 @@ Per-project toolchains: put a `flake.nix` devShell in the repo plus `.envrc` wit
 
 ## Mac: first run
 
-1. Install Nix and the Xcode Command Line Tools (Homebrew needs them): `xcode-select --install`
+1. Install Determinate Nix ([Determinate.pkg](https://install.determinate.systems/determinate-pkg/stable/Universal))
+   and the Xcode Command Line Tools (Homebrew needs them): `xcode-select --install`
 2. Clone this repo to `~/dotfiles`.
 3. Let nix-darwin take over the files it manages (it refuses to overwrite unmanaged ones):
    ```sh
-   sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.before-nix-darwin
-   # keep /etc/nix/ca-bundle.pem until the first switch: the installer's daemon still uses it
+   # nix.conf stays Determinate's; the determinate module writes nix.custom.conf
+   [ -f /etc/nix/nix.custom.conf ] && sudo mv /etc/nix/nix.custom.conf /etc/nix/nix.custom.conf.before-nix-darwin
    [ -f /etc/zshrc ] && sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
    [ -f /etc/zprofile ] && sudo mv /etc/zprofile /etc/zprofile.before-nix-darwin
    ```
 4. Bootstrap, then link the configs:
    ```sh
-   sudo NIX_SSL_CERT_FILE=/etc/nix/ca-bundle.pem nix --extra-experimental-features 'nix-command flakes' \
-     run nix-darwin/master#darwin-rebuild -- switch --flake ~/dotfiles
+   sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ~/dotfiles
    PATH=/run/current-system/sw/bin:$PATH ~/dotfiles/config/stow.sh   # this shell predates nix-darwin's PATH
    ```
-5. Machine-only stuff (Zscaler cert vars, secrets) goes in `~/.zshrc.local`, git overrides in `~/.config/git/local`.
+5. Machine-only stuff (secrets) goes in `~/.zshrc.local`, git overrides in `~/.config/git/local`.
 6. Grant AeroSpace Accessibility access (System Settings → Privacy & Security → Accessibility).
    It lives in /nix/store, so re-grant after it updates.
-7. Open a new terminal. Some defaults need logout/login (key repeat, Caps→Esc).
+7. Open a new terminal. Some defaults need logout/login (key repeat).
 
 ## Mac: moving over from the old home-manager setup
 
