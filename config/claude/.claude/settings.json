@@ -22,5 +22,9 @@
   },
   "autoMemoryEnabled": false,
   "skipWorkflowUsageWarning": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
 }
