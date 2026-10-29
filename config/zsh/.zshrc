@@ -103,7 +103,7 @@ else
 fi
 alias fd="fd --hidden --no-ignore"
 alias ls="ls --color=auto -1"
-alias ll="ls -Ahl"
+ll() { printf '\e[?7l'; eza --long --all --time-style=relative "$@"; printf '\e[?7h' }
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
@@ -157,13 +157,14 @@ function gwt() {
   cd ~/$b
 }
 function gwtr() {
-  local d
-  for d in ~/*(/N); do
-    [[ -f $d/.git ]] || continue
-    git -C $d fetch -q origin main &&
-    git -C $d merge-base --is-ancestor HEAD origin/main &&
-    git -C $d worktree remove --force $d && echo "removed $d"
+  local d st
+  git fetch -q origin main || return
+  for d in $(git worktree list | awk 'NR>1 {print $1}'); do
+    git -C $d merge-base --is-ancestor HEAD origin/main || continue
+    st=$(git -C $d status --short)
+    [[ -z $st ]] || { print "\n$d\n$st"; read -q "?remove? [y/N] " } && trash $d && print "removed $d"
   done
+  git worktree prune
 }
 
 if [[ $OSTYPE == darwin* ]]; then
