@@ -1,4 +1,8 @@
 {
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "model": "opus",
   "statusLine": {
     "type": "command",
@@ -6,7 +10,8 @@
   },
   "enabledPlugins": {
     "lua-lsp@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true
   },
   "modelSettings": {
     "claude-fable-5-1": {
@@ -22,9 +27,5 @@
   },
   "autoMemoryEnabled": false,
   "skipWorkflowUsageWarning": true,
-  "voiceEnabled": true,
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  }
+  "voiceEnabled": true
 }
