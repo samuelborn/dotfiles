@@ -54,7 +54,14 @@
     glab
     qmk # macOS needs no udev rules, unlike hardware.keyboard.qmk on NixOS
     dos2unix # required by `qmk doctor`
-    man-pages # Linux/glibc man pages; macOS ships BSD ones (alias glibc-man in ~/.zshrc.local)
+    man-pages # Linux/glibc man pages; macOS ships BSD ones
+    # reads only the Linux man pages above, e.g. `man-glibc 2 mkdir`; a command, not an alias,
+    # so non-interactive shells (bash, scripts, agents) find it too
+    (writeShellScriptBin "man-glibc" ''
+      MANPATH=${man-pages}/share/man MANPAGER=cat exec man "$@"
+    '')
+    (callPackage ./safari-new-window.nix { })
+    defaultbrowser # sets the default browser, e.g. `defaultbrowser safari-new-window`
   ];
 
   # not services.aerospace: it forces a generated --config-path, ignoring ~/.config/aerospace
