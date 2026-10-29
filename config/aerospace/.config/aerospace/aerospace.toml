@@ -4,8 +4,8 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 exec-on-workspace-change = ['/usr/bin/open', '-g', 'swiftbar://refreshplugin?name=aerospace']
 
 [gaps]
-inner = { horizontal = 8, vertical = 8 }
-outer = { left = 8, bottom = 8, top = 8, right = 8 }
+inner = { horizontal = 0, vertical = 0 }
+outer = { left = 0, bottom = 0, top = 0, right = 0 }
 
 [mode.main.binding]
 alt-d = 'exec-and-forget open ~'
@@ -13,7 +13,6 @@ alt-t = '''exec-and-forget pgrep -xq ghostty && osascript -e 'tell application "
 alt-w = '''exec-and-forget pgrep -xq Safari && osascript -e 'tell application "Safari" to make new document'; open -a Safari'''
 alt-q = 'close --quit-if-last-window'
 
-alt-y = 'layout tiles horizontal vertical'
 alt-f = 'fullscreen'
 alt-shift-f = 'layout floating tiling'
 
