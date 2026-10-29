@@ -106,6 +106,12 @@ vim.keymap.set({ "n", "t" }, "<C-S-Right>", "<cmd>vertical resize +5<cr>")
 vim.keymap.set({ "n", "t" }, "<C-S-Up>", "<cmd>resize +5<cr>")
 vim.keymap.set({ "n", "t" }, "<C-S-Down>", "<cmd>resize -5<cr>")
 
+-- Up/Down move by screen line in wrapped text; with a count they still move by real lines
+vim.keymap.set({ "n", "x" }, "<Up>", "v:count ? 'k' : 'gk'", { expr = true })
+vim.keymap.set({ "n", "x" }, "<Down>", "v:count ? 'j' : 'gj'", { expr = true })
+vim.keymap.set("i", "<Up>", "<Cmd>normal! gk<CR>")
+vim.keymap.set("i", "<Down>", "<Cmd>normal! gj<CR>")
+
 -- Alt-arrows jump by word, like in other macOS text fields
 vim.keymap.set({ "n", "x" }, "<M-Left>", "b")
 vim.keymap.set({ "n", "x" }, "<M-Right>", "w")
