@@ -54,7 +54,7 @@
     glab
     qmk # macOS needs no udev rules, unlike hardware.keyboard.qmk on NixOS
     dos2unix # required by `qmk doctor`
-    man-pages # Linux/glibc man pages; macOS ships BSD ones (alias lman in ~/.zshrc.local)
+    man-pages # Linux/glibc man pages; macOS ships BSD ones (alias glibc-man in ~/.zshrc.local)
   ];
 
   # not services.aerospace: it forces a generated --config-path, ignoring ~/.config/aerospace
